@@ -226,7 +226,39 @@ class Solution:
         return res
 
     def zigzagLevelOrder(self, root: TreeNode) -> List[List[int]]:
-        pass
+        if not root:
+            return []
+
+        res = []
+        index = 0
+        output = [root, None]
+        sequence = "Left"
+        while len(output) != 0:
+            current = output.pop(0)
+            if current is not None:
+                try:
+                    if sequence == "Left":
+                        res[index].append(current.val)
+                    else:
+                        res[index].insert(0, current.val)
+                except:
+                    res.append([current.val])
+
+                if current.left:
+                    output.append(current.left)
+
+                if current.right:
+                    output.append(current.right)
+            elif current is None and len(output) != 0:
+                output.append(None)
+                index = index + 1
+                if sequence == "Left":
+                    sequence = "Right"
+                else:
+                    sequence = "Left"
+
+        return res
+
 
 t = TreeNode(1)
 t.right = TreeNode(2)
