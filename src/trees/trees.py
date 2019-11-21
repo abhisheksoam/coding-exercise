@@ -346,6 +346,76 @@ class Solution:
         helper(root, "")
         return sum(int(_) for _ in output)
 
+    """
+    https://leetcode.com/problems/unique-binary-search-trees/
+    """
+
+    def numTrees(self, n: int) -> int:
+        pass
+
+    def generateTrees(self, n: int) -> List[TreeNode]:
+        pass
+
+    """
+    https://leetcode.com/problems/average-of-levels-in-binary-tree/
+    """
+
+    def averageOfLevels(self, root: TreeNode) -> List[float]:
+        if not root:
+            return []
+
+        res = []
+        index = 0
+        output = [root, None]
+        while output:
+            current = output.pop(0)
+            if current is not None:
+                try:
+                    print(res[index])
+                    res[index][0] = (res[index][0] * res[index][1] + current.val) / (
+                        res[index][1] + 1
+                    )
+                    res[index][1] = res[index][1] + 1
+                except:
+                    res.append([current.val, 1])
+
+                if current.left:
+                    output.append(current.left)
+
+                if current.right:
+                    output.append(current.right)
+            elif current is None and len(output) != 0:
+                output.append(None)
+                index = index + 1
+
+        return [_[0] for _ in res]
+
+    """
+    https://leetcode.com/problems/increasing-order-search-tree/
+    """
+
+    def increasingBST(self, root: TreeNode) -> TreeNode:
+        output = []
+        output_node = None
+
+        def helper(node):
+            if not node:
+                return
+
+            helper(node.left)
+            output.append(node.val)
+            helper(node.right)
+
+        helper(node=root)
+        if output:
+            output_node = TreeNode(output[0])
+            current = output_node
+            for obj in output[1:]:
+                current.right = TreeNode(obj)
+                current = current.right
+
+        return output_node
+
 
 t = TreeNode(5)
 t.left = TreeNode(4)
@@ -358,7 +428,7 @@ t.right.right = TreeNode(4)
 t.right.right.right = TreeNode(1)
 
 s = Solution()
-print(s.sumNumbers(t))
+print(s.averageOfLevels(t))
 # def stringToTreeNode(input):
 #     input = input.strip()
 #     input = input[1:-1]
