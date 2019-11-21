@@ -20,7 +20,7 @@ class Solution:
 
     def print_ll(self, head: ListNode):
         while head is not None:
-            print(head.val, '->', end=' ')
+            print(head.val, "->", end=" ")
             head = head.next
 
     def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
@@ -83,6 +83,7 @@ class Solution:
 
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         from collections import defaultdict
+
         process = {}
         output = defaultdict(dict)
         index = 0
@@ -93,14 +94,10 @@ class Solution:
         for i in range(0, size):
             for j in range(i + 1, size):
                 valA, valB = nums[i], nums[j]
-                valC = - (valA + valB)
+                valC = -(valA + valB)
                 if process.get(valC):
                     if self.is_candidate_absent(output, [valA, valB, valC]):
-                        output[index] = {
-                            valA: True,
-                            valB: True,
-                            valC: True
-                        }
+                        output[index] = {valA: True, valB: True, valC: True}
                         index = index + 1
         l = []
         for key, value in output.items():
@@ -124,8 +121,7 @@ class Solution:
 
     def convert(self, s: str, numRows: int) -> str:
         size = len(str)
-        processing_array = [[''] * size] * numRows
-
+        processing_array = [[""] * size] * numRows
 
 
 s = Solution()

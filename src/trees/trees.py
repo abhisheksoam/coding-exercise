@@ -49,7 +49,7 @@ self.info (the value of the node)
 
 def preOrder(root):
     if root:
-        print(root, end=' ')
+        print(root, end=" ")
         preOrder(root.left)
         preOrder(root.right)
 
@@ -60,6 +60,7 @@ def height(root):
 
 def levelOrder(root):
     from collections import deque
+
     arr = deque([root, None])
 
     while True:
@@ -69,7 +70,7 @@ def levelOrder(root):
                 break
             arr.append(None)
         else:
-            print(current_element, end=' ')
+            print(current_element, end=" ")
             if current_element.left is not None:
                 arr.append(current_element.left)
 
@@ -95,8 +96,7 @@ class TreeNode:
 
 class Solution:
     def isValidBST(self, root: TreeNode) -> bool:
-
-        def helper(node, upper=float('-inf'), lower=float('-inf')):
+        def helper(node, upper=float("-inf"), lower=float("-inf")):
             if not node:
                 return True
 
@@ -113,7 +113,6 @@ class Solution:
         return helper(root)
 
     def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
-
         def helper(node1, node2):
             if not node1 and not node2:
                 return True
@@ -135,7 +134,6 @@ class Solution:
         return helper(p, q)
 
     def leafSimilar(self, root1: TreeNode, root2: TreeNode) -> bool:
-
         def helper(node, output=[]):
             # import ipdb
             # ipdb.set_trace()
@@ -259,18 +257,108 @@ class Solution:
 
         return res
 
+    def hasPathSum(self, root: TreeNode, sum: int) -> bool:
+        def helper(node, sum):
+            if not node:
+                return False
 
-t = TreeNode(1)
-t.right = TreeNode(2)
-t.left = TreeNode(3)
+            if node.val == sum and not node.left and not node.right:
+                return True
 
-# t1 = TreeNode(1)
-# t1.left = TreeNode(2)
-# t1.right = TreeNode(3)
+            return helper(node.left, sum - node.val) or helper(
+                node.right, sum - node.val
+            )
+
+        return helper(root, sum)
+
+    # TODO: Complete this
+    """
+    https://leetcode.com/problems/path-sum-ii/
+    """
+
+    def pathSum(self, root: TreeNode, sum: int) -> List[List[int]]:
+        output = []
+        index = 0
+
+        def helper(node, sum, path=[]):
+            if not node:
+                return path
+
+            output = []
+            if node.val == sum and not node.left and not node.right:
+                path.append(output)
+                return path
+
+            output.append(helper(node.left, sum - node.val))
+            output.append(helper(node.right, sum - node.val))
+            return output
+
+        return helper(root, sum)
+
+    """
+    https://leetcode.com/problems/binary-tree-level-order-traversal-ii/ 
+    """
+
+    def levelOrderBottom(self, root: TreeNode) -> List[List[int]]:
+        if not root:
+            return []
+
+        res = []
+        index = 0
+        output = [root, None]
+        while len(output) != 0:
+            current = output.pop(0)
+            if current is not None:
+                try:
+                    res[index].append(current.val)
+                except:
+                    res.insert(0, [current.val])
+                    index = 0
+
+                if current.left:
+                    output.append(current.left)
+
+                if current.right:
+                    output.append(current.right)
+            elif current is None and len(output) != 0:
+                output.append(None)
+                index = "a"
+
+        return res
+
+    """
+    https://leetcode.com/problems/sum-root-to-leaf-numbers/
+    """
+
+    def sumNumbers(self, root: TreeNode) -> int:
+        output = []
+
+        def helper(root, process=""):
+            if not root:
+                return
+
+            if root.left is None and root.right is None:
+                output.append(process + str(root.val))
+
+            helper(root.left, process + str(root.val))
+            helper(root.right, process + str(root.val))
+
+        helper(root, "")
+        return sum(int(_) for _ in output)
+
+
+t = TreeNode(5)
+t.left = TreeNode(4)
+t.left.left = TreeNode(11)
+t.left.left.left = TreeNode(7)
+t.left.left.right = TreeNode(2)
+t.right = TreeNode(8)
+t.right.left = TreeNode(13)
+t.right.right = TreeNode(4)
+t.right.right.right = TreeNode(1)
 
 s = Solution()
-s.levelOrder(t)
-
+print(s.sumNumbers(t))
 # def stringToTreeNode(input):
 #     input = input.strip()
 #     input = input[1:-1]

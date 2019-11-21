@@ -10,10 +10,15 @@ for n_bins in range(2, 20):
     Accuracy = []
     print(k_fold.split(X))
     for train_indices, test_indices in k_fold.split(X):
-        print('Train: %s | test: %s' % (train_indices, test_indices))
-        X_train, X_test, y_train, y_test = X[train_indices], X[test_indices], y[train_indices], y[test_indices]
+        print("Train: %s | test: %s" % (train_indices, test_indices))
+        X_train, X_test, y_train, y_test = (
+            X[train_indices],
+            X[test_indices],
+            y[train_indices],
+            y[test_indices],
+        )
         # discretise
-        est = KBinsDiscretizer(n_bins=n_bins, encode='onehot', strategy='uniform')
+        est = KBinsDiscretizer(n_bins=n_bins, encode="onehot", strategy="uniform")
         est.fit(X_train)
         Xd_train = est.transform(X_train)
         Xd_test = est.transform(X_test)

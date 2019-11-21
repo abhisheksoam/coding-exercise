@@ -5,6 +5,7 @@ class Solution:
     """
     https://leetcode.com/problems/wildcard-matching/
     """
+
     def isMatch(self, s: str, p: str) -> bool:
         pass
 
