@@ -416,6 +416,77 @@ class Solution:
 
         return output_node
 
+    """
+    https://leetcode.com/problems/path-sum-ii/
+    """
+
+    def pathSum(self, root: TreeNode, sum: int) -> List[List[int]]:
+        output = []
+
+        def helper(node, sum, process=[]):
+            if not node:
+                return process
+
+            process.append(node.val)
+            if not node.left and not node.right and sum == node.val:
+                output.append(process)
+
+            helper(node.left, sum - node.val, process)
+            helper(node.right, sum - node.val, process)
+            process.pop()
+
+        helper(root, sum, [])
+        return output
+
+    """
+    https://leetcode.com/problems/binary-tree-paths/
+    """
+
+    def binaryTreePaths(self, root: TreeNode) -> List[str]:
+        output = []
+
+        def helper(node, process=""):
+            if not node:
+                return
+
+            if process:
+                process = process + "->{node_val}".format(node_val=node.val)
+            else:
+                process = "{node_val}".format(node_val=node.val)
+
+            if not node.left and not node.right:
+                output.append(process)
+
+            helper(node.left, process)
+            helper(node.right, process)
+
+        helper(root, "")
+        return output
+
+    """
+    https://leetcode.com/problems/path-sum-iii/
+    """
+
+    def pathSum(self, root: TreeNode, sum: int) -> int:
+        def helper(node, sum, count):
+            if not node or (sum < node.val):
+                return count
+
+            if sum == node.val:
+                count = count + 1
+
+            if node.left:
+                helper(node.left, sum - node.val, count)
+                helper(node.left, sum, count)
+
+            if node.right:
+                helper(node.right, sum - node.val, count)
+                helper(node.right, sum, count)
+
+            return count
+
+        return helper(root, sum, 0)
+
 
 t = TreeNode(5)
 t.left = TreeNode(4)
@@ -428,61 +499,3 @@ t.right.right = TreeNode(4)
 t.right.right.right = TreeNode(1)
 
 s = Solution()
-print(s.averageOfLevels(t))
-# def stringToTreeNode(input):
-#     input = input.strip()
-#     input = input[1:-1]
-#     if not input:
-#         return None
-#
-#     inputValues = [s.strip() for s in input.split(',')]
-#     root = TreeNode(int(inputValues[0]))
-#     nodeQueue = [root]
-#     front = 0
-#     index = 1
-#     while index < len(inputValues):
-#         node = nodeQueue[front]
-#         front = front + 1
-#
-#         item = inputValues[index]
-#         index = index + 1
-#         if item != "null":
-#             leftNumber = int(item)
-#             node.left = TreeNode(leftNumber)
-#             nodeQueue.append(node.left)
-#
-#         if index >= len(inputValues):
-#             break
-#
-#         item = inputValues[index]
-#         index = index + 1
-#         if item != "null":
-#             rightNumber = int(item)
-#             node.right = TreeNode(rightNumber)
-#             nodeQueue.append(node.right)
-#     return root
-#
-#
-# def main():
-#     import sys
-#     import io
-#     def readlines():
-#         for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8'):
-#             yield line.strip('\n')
-#
-#     lines = readlines()
-#     while True:
-#         try:
-#             line = next(lines)
-#             root = stringToTreeNode(line);
-#
-#             ret = Solution().levelOrder(root)
-#
-#             out = (ret);
-#             print(out)
-#         except StopIteration:
-#             break
-#
-#
-# if __name__ == '__main__':
-#     main()
