@@ -373,7 +373,7 @@ class Solution:
                 try:
                     print(res[index])
                     res[index][0] = (res[index][0] * res[index][1] + current.val) / (
-                        res[index][1] + 1
+                            res[index][1] + 1
                     )
                     res[index][1] = res[index][1] + 1
                 except:
@@ -468,34 +468,8 @@ class Solution:
     """
 
     def pathSum(self, root: TreeNode, sum: int) -> int:
-        def helper(node, sum, count):
-            if not node or (sum < node.val):
-                return count
+        # TODO: DP
+        pass
 
-            if sum == node.val:
-                count = count + 1
-
-            if node.left:
-                helper(node.left, sum - node.val, count)
-                helper(node.left, sum, count)
-
-            if node.right:
-                helper(node.right, sum - node.val, count)
-                helper(node.right, sum, count)
-
-            return count
-
-        return helper(root, sum, 0)
-
-
-t = TreeNode(5)
-t.left = TreeNode(4)
-t.left.left = TreeNode(11)
-t.left.left.left = TreeNode(7)
-t.left.left.right = TreeNode(2)
-t.right = TreeNode(8)
-t.right.left = TreeNode(13)
-t.right.right = TreeNode(4)
-t.right.right.right = TreeNode(1)
 
 s = Solution()
