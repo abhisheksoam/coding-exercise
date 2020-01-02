@@ -12,33 +12,6 @@ class Node:
         return str(self.info)
 
 
-class BinarySearchTree:
-    def __init__(self):
-        self.root = None
-
-    def create(self, val):
-        if self.root == None:
-            self.root = Node(val)
-        else:
-            current = self.root
-
-            while True:
-                if val < current.info:
-                    if current.left:
-                        current = current.left
-                    else:
-                        current.left = Node(val)
-                        break
-                elif val > current.info:
-                    if current.right:
-                        current = current.right
-                    else:
-                        current.right = Node(val)
-                        break
-                else:
-                    break
-
-
 """
 Node is defined as
 self.left (the left child of the node)
@@ -54,39 +27,6 @@ def preOrder(root):
         preOrder(root.right)
 
 
-def height(root):
-    pass
-
-
-def levelOrder(root):
-    from collections import deque
-
-    arr = deque([root, None])
-
-    while True:
-        current_element = arr.popleft()
-        if current_element is None:
-            if len(arr) == 0:
-                break
-            arr.append(None)
-        else:
-            print(current_element, end=" ")
-            if current_element.left is not None:
-                arr.append(current_element.left)
-
-            if current_element.right is not None:
-                arr.append(current_element.right)
-
-
-# tree = BinarySearchTree()
-# t = int(input())
-#
-# arr = list(map(int, input().split(' ')))
-#
-# for i in range(t):
-#     tree.create(arr[i])
-#
-# preOrder(tree.root)
 class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -471,5 +411,107 @@ class Solution:
         # TODO: DP
         pass
 
+    """https://leetcode.com/problems/recover-binary-search-tree/"""
+
+    def recoverTree(self, root: TreeNode) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+
+    # """
+    # https://leetcode.com/problems/all-elements-in-two-binary-search-trees/
+    # """
+    def getAllElements(self, root1: TreeNode, root2: TreeNode) -> List[int]:
+
+        # Traversing the BST and adding elements into the tree
+        def helper(root, output=[]):
+            if not root:
+                return output
+
+            helper(root.left, output)
+            output.append(root.val)
+            helper(root.right, output)
+            return output
+
+        l1 = helper(root1, [])
+        l2 = helper(root2, [])
+        output = []
+        l1_index = 0
+        l2_index = 0
+
+        while l1_index < len(l1) and l2_index < len(l2):
+            l2_value = l2[l2_index]
+            l1_value = l1[l1_index]
+            if l1_value >= l2_value:
+                output.append(l2_value)
+                l2_index = l2_index + 1
+            elif l2_value >= l1_value:
+                output.append(l1_value)
+                l1_index = l1_index + 1
+
+        while l1_index < len(l1):
+            output.append(l1[l1_index])
+            l1_index += 1
+
+        while l2_index < len(l2):
+            output.append(l2[l2_index])
+            l2_index += 1
+
+        return output
+
+    """https://leetcode.com/problems/flip-equivalent-binary-trees/"""
+    # FAILED Approach
+    # def flipEquiv(self, root1: TreeNode, root2: TreeNode) -> bool:
+    #
+    #     # Do a level order traversal and compare the elements
+    #     queue1 = [root1, None]
+    #     queue2 = [root2, None]
+    #     previous_set1 = set()
+    #     previous_set2 = set()
+    #     while queue1 and queue2:
+    #         c1 = queue1.pop(0)
+    #         c2 = queue2.pop(0)
+    #
+    #         if c1 is None and c2 is None:
+    #             if not previous_set2.difference(previous_set1):
+    #                 previous_set1 = set()
+    #                 previous_set2 = set()
+    #                 if queue1:
+    #                     queue1.append(None)
+    #                 if queue2:
+    #                     queue2.append(None)
+    #             else:
+    #                 return False
+    #         elif c1 and c2:
+    #             previous_set1.add(c1.val)
+    #             previous_set2.add(c2.val)
+    #
+    #             if c1.left:
+    #                 queue1.append(c1.left)
+    #
+    #             if c1.right:
+    #                 queue1.append(c1.right)
+    #
+    #             if c2.left:
+    #                 queue2.append(c2.left)
+    #
+    #             if c2.right:
+    #                 queue2.append(c2.right)
+    #         else:
+    #             return False
+    #
+    #     return True
+
+    # TODO: Come back at this
+    def flipEquiv(self, root1: TreeNode, root2: TreeNode) -> bool:
+        pass
+
 
 s = Solution()
+t1 = TreeNode(1)
+t1.left = TreeNode(0)
+t1.right = TreeNode(3)
+
+t2 = TreeNode(2)
+t2.left = TreeNode(1)
+t2.right = TreeNode(4)
