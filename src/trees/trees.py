@@ -39,14 +39,6 @@ class BinarySearchTree:
                     break
 
 
-"""
-Node is defined as
-self.left (the left child of the node)
-self.right (the right child of the node)
-self.info (the value of the node)
-"""
-
-
 def preOrder(root):
     if root:
         print(root, end=' ')
@@ -259,72 +251,118 @@ class Solution:
 
         return res
 
+    """
+    https://leetcode.com/problems/maximum-depth-of-binary-tree/¬
+    """
 
-t = TreeNode(1)
-t.right = TreeNode(2)
-t.left = TreeNode(3)
+    def maxDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
 
-# t1 = TreeNode(1)
-# t1.left = TreeNode(2)
-# t1.right = TreeNode(3)
+        depth = 1
+        output = [root, None]
+        while len(output) != 0:
+            current = output.pop(0)
+            if current is not None:
 
-s = Solution()
-s.levelOrder(t)
+                if current.left:
+                    output.append(current.left)
 
-# def stringToTreeNode(input):
-#     input = input.strip()
-#     input = input[1:-1]
-#     if not input:
-#         return None
-#
-#     inputValues = [s.strip() for s in input.split(',')]
-#     root = TreeNode(int(inputValues[0]))
-#     nodeQueue = [root]
-#     front = 0
-#     index = 1
-#     while index < len(inputValues):
-#         node = nodeQueue[front]
-#         front = front + 1
-#
-#         item = inputValues[index]
-#         index = index + 1
-#         if item != "null":
-#             leftNumber = int(item)
-#             node.left = TreeNode(leftNumber)
-#             nodeQueue.append(node.left)
-#
-#         if index >= len(inputValues):
-#             break
-#
-#         item = inputValues[index]
-#         index = index + 1
-#         if item != "null":
-#             rightNumber = int(item)
-#             node.right = TreeNode(rightNumber)
-#             nodeQueue.append(node.right)
-#     return root
-#
-#
-# def main():
-#     import sys
-#     import io
-#     def readlines():
-#         for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8'):
-#             yield line.strip('\n')
-#
-#     lines = readlines()
-#     while True:
-#         try:
-#             line = next(lines)
-#             root = stringToTreeNode(line);
-#
-#             ret = Solution().levelOrder(root)
-#
-#             out = (ret);
-#             print(out)
-#         except StopIteration:
-#             break
-#
-#
-# if __name__ == '__main__':
-#     main()
+                if current.right:
+                    output.append(current.right)
+            elif current is None and len(output) != 0:
+                output.append(None)
+                depth = depth + 1
+
+        return depth
+
+    def maxDepth(self, root: TreeNode) -> int:
+
+        def helper(node):
+            if not node:
+                return 0
+
+            left = 1 + helper(node.left)
+            right = 1 + helper(node.right)
+
+            return max(left, right)
+
+        return helper(root)
+
+    """
+    https://leetcode.com/problems/maximum-depth-of-n-ary-tree/
+    """
+
+    class Node:
+        def __init__(self, val=None, children=None):
+            self.val = val
+            self.children = children
+
+    def maxDepth(self, root: 'Node') -> int:
+        if not root:
+            return 0
+
+        output = [root, None]
+        if not root:
+            return 0
+
+        depth = 1
+        output = [root, None]
+        while len(output) != 0:
+            current = output.pop(0)
+            if current is not None:
+                for child in current.children:
+                    output.append(child)
+
+            elif current is None and len(output) != 0:
+                output.append(None)
+                depth = depth + 1
+
+        return depth
+
+    """
+    https://leetcode.com/problems/path-sum-iii/
+    """
+
+    def pathSum(self, root: TreeNode, sum: int) -> int:
+
+        def helper(node, sum):
+            if not node or sum < 0:
+                return 0
+
+            if sum == 0:
+                return 1
+
+            if node.val < sum:
+                left = helper(node.left, sum - node.val)
+                right = helper(node.right, sum - node.val)
+                return left + right
+
+        return helper(root, sum)
+
+    """
+    https://leetcode.com/problems/path-sum/
+    """
+
+    def hasPathSum(self, root: TreeNode, sum: int) -> bool:
+
+        def helper(node, sum):
+            import ipdb
+            ipdb.set_trace()
+            if not node or sum < 0:
+                return False
+
+            if sum == 0:
+                return True
+
+            left = helper(node.left, sum - node.val)
+            right = helper(node.right, sum - node.val)
+
+            if left: return True
+
+            if right: return True
+
+        return helper(root, sum)
+
+
+
