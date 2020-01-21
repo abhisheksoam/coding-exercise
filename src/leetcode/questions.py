@@ -128,7 +128,7 @@ class Solution:
     def expand_around_center(self, s, left, right):
         output = ""
         while left >= 0 and right < len(s) and s[left] == s[right]:
-            output = s[left:right + 1]
+            output = s[left : right + 1]
             left = left - 1
             right = right + 1
 
@@ -245,6 +245,7 @@ class Solution:
     Question 33:
     https://leetcode.com/problems/search-in-rotated-sorted-array/
     """
+
     def search(self, nums: List[int], target: int) -> int:
         if len(nums) == 0:
             return -1
@@ -261,8 +262,8 @@ class Solution:
         previous_value = nums[0]
         for index, value in enumerate(nums[1:]):
             if value - previous_value < 0:
-                right_array = nums[index + 1:]
-                left_array = nums[0:index + 1]
+                right_array = nums[index + 1 :]
+                left_array = nums[0 : index + 1]
                 break
 
         if left_array is None and right_array is None:
@@ -279,7 +280,6 @@ class Solution:
             else:
                 return len(left_array) + right_result
 
-
     """
     Question 34:
     https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/
@@ -290,7 +290,7 @@ class Solution:
         if size == 0:
             return [-1, -1]
 
-        index = self.binary_search(nums, target, 0, len(nums) -1)
+        index = self.binary_search(nums, target, 0, len(nums) - 1)
         if index is -1:
             return [-1, -1]
         else:
@@ -344,7 +344,7 @@ class Solution:
 
 
 s = Solution()
-nums = [1,3,5,6]
+nums = [1, 3, 5, 6]
 print(s.searchInsert(nums, 7))
 # print(s.searchRange(nums, 6))
 # print(s.longestPalindrome("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))

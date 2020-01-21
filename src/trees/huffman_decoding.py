@@ -28,7 +28,7 @@ def huffman_hidden():  # builds the tree and returns root
     while q.qsize() != 1:
         a = q.get()
         b = q.get()
-        obj = Node(a[0] + b[0], '\0')
+        obj = Node(a[0] + b[0], "\0")
         obj.left = a[2]
         obj.right = b[2]
         q.put((obj.freq, obj.data, obj))
@@ -39,9 +39,9 @@ def huffman_hidden():  # builds the tree and returns root
 
 
 def dfs_hidden(obj, already):
-    if (obj == None):
+    if obj == None:
         return
-    elif (obj.data != '\0'):
+    elif obj.data != "\0":
         code_hidden[obj.data] = already
 
     dfs_hidden(obj.right, already + "1")
@@ -64,14 +64,12 @@ def decodeHuff(root, s):
 
     if root.data is None:
         char = s[0]
-        if char == '1':
+        if char == "1":
             decodeHuff(root.right, s[1:])
-        elif char == '0':
+        elif char == "0":
             decodeHuff(root.left, s[1:])
     else:
-        print(root.data, end='')
-
-
+        print(root.data, end="")
 
 
 # Enter Your Code Here
@@ -82,7 +80,7 @@ freq = {}  # maps each character to its frequency
 cntr = 0
 
 for ch in ip:
-    if (freq.get(ch) == None):
+    if freq.get(ch) == None:
         freq[ch] = 1
     else:
         freq[ch] += 1

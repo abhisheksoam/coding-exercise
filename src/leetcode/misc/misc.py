@@ -20,7 +20,7 @@ class Solution:
 
     def print_ll(self, head: ListNode):
         while head is not None:
-            print(head.val, '->', end=' ')
+            print(head.val, "->", end=" ")
             head = head.next
 
     def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
@@ -83,6 +83,7 @@ class Solution:
 
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         from collections import defaultdict
+
         process = {}
         output = defaultdict(dict)
         index = 0
@@ -93,14 +94,10 @@ class Solution:
         for i in range(0, size):
             for j in range(i + 1, size):
                 valA, valB = nums[i], nums[j]
-                valC = - (valA + valB)
+                valC = -(valA + valB)
                 if process.get(valC):
                     if self.is_candidate_absent(output, [valA, valB, valC]):
-                        output[index] = {
-                            valA: True,
-                            valB: True,
-                            valC: True
-                        }
+                        output[index] = {valA: True, valB: True, valC: True}
                         index = index + 1
         l = []
         for key, value in output.items():
@@ -124,20 +121,46 @@ class Solution:
 
     def convert(self, s: str, numRows: int) -> str:
         size = len(str)
-        processing_array = [[''] * size] * numRows
+        processing_array = [[""] * size] * numRows
 
+    """
+    https://leetcode.com/problems/count-of-smaller-numbers-after-self/
+    """
+
+    def countSmaller(self, nums: List[int]) -> List[int]:
+        def binary_search(input, target, l, r):
+            if l > r:
+                return 0
+            else:
+                m = l + (r - l) / 2
+                m = int(m)
+
+                if input[m] == target:
+                    return m
+                elif target > input[m]:
+                    return binary_search(input, target, m + 1, r)
+                elif target < input[m]:
+                    return binary_search(input, target, l, m - 1)
+
+        size = len(nums)
+        res = [0] * (size)
+        # Sort the list and remove the duplicates
+        sorted_list = list(set(sorted(nums)))
+        response = {}
+        for i in range(0, size):
+            element = nums[i]
+            if response.get(element, None):
+                res[i] = response.get(element)
+            else:
+                index = binary_search(sorted_list, element, 0, len(sorted_list) - 1)
+                res[i] = index
+                response[element] = index
+                sorted_list.remove(element)
+
+        return res
 
 
 s = Solution()
-nums = [-1, 0, 1, 2, -1, -4]
-print(s.threeSum(nums))
-
-# node = ListNode(1)
-# node.next = ListNode(2)
-# node.next.next = ListNode(3)
-# node.next.next.next = ListNode(4)
-# node.next.next.next.next = ListNode(5)
-
-# s.print_ll(node)
-# print('\n')
-# s.print_ll(s.removeNthFromEnd(node, 1))
+print(s.countSmaller(
+    [26, 78, 27, 100, 33, 67, 90, 23, 66, 5, 38, 7, 35, 23, 52, 22, 83, 51, 98, 69, 81, 32, 78, 28, 94, 13, 2, 97, 3,
+     76, 99, 51, 9, 21, 84, 66, 65, 36, 100, 41]))
