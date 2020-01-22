@@ -1,3 +1,63 @@
+from .trees import TreeNode, Solution
+
+
+def stringToTreeNode(input):
+    input = input.strip()
+    input = input[1:-1]
+    if not input:
+        return None
+
+    inputValues = [s.strip() for s in input.split(',')]
+    root = TreeNode(int(inputValues[0]))
+    nodeQueue = [root]
+    front = 0
+    index = 1
+    while index < len(inputValues):
+        node = nodeQueue[front]
+        front = front + 1
+
+        item = inputValues[index]
+        index = index + 1
+        if item != "null":
+            leftNumber = int(item)
+            node.left = TreeNode(leftNumber)
+            nodeQueue.append(node.left)
+
+        if index >= len(inputValues):
+            break
+
+        item = inputValues[index]
+        index = index + 1
+        if item != "null":
+            rightNumber = int(item)
+            node.right = TreeNode(rightNumber)
+            nodeQueue.append(node.right)
+    return root
+
+
+def main():
+    import sys
+    import io
+    def readlines():
+        for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8'):
+            yield line.strip('\n')
+
+    lines = readlines()
+    while True:
+        try:
+            line = next(lines)
+            root = stringToTreeNode(line)
+
+            ret = Solution().hasPathSum(root, sum)
+
+            out = (ret);
+        except StopIteration:
+            break
+
+
+if __name__ == '__main__':
+    main()
+
 from typing import List
 
 
@@ -10,6 +70,33 @@ class Node:
 
     def __str__(self):
         return str(self.info)
+
+
+class BinarySearchTree:
+    def __init__(self):
+        self.root = None
+
+    def create(self, val):
+        if self.root == None:
+            self.root = Node(val)
+        else:
+            current = self.root
+
+            while True:
+                if val < current.info:
+                    if current.left:
+                        current = current.left
+                    else:
+                        current.left = Node(val)
+                        break
+                elif val > current.info:
+                    if current.right:
+                        current = current.right
+                    else:
+                        current.right = Node(val)
+                        break
+                else:
+                    break
 
 
 """
@@ -197,6 +284,20 @@ class Solution:
 
         return res
 
+    """
+    https://leetcode.com/problems/maximum-depth-of-binary-tree/¬
+    """
+
+    def maxDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+
+        depth = 1
+        output = [root, None]
+        while len(output) != 0:
+            current = output.pop(0)
+            if current is not None:
+
     def hasPathSum(self, root: TreeNode, sum: int) -> bool:
         def helper(node, sum):
             if not node:
@@ -326,186 +427,290 @@ class Solution:
                     output.append(current.right)
             elif current is None and len(output) != 0:
                 output.append(None)
-                index = index + 1
+                depth = depth + 1
 
-        return [_[0] for _ in res]
+        return depth
 
-    """
-    https://leetcode.com/problems/increasing-order-search-tree/
-    """
-
-    def increasingBST(self, root: TreeNode) -> TreeNode:
-        output = []
-        output_node = None
+    def maxDepth(self, root: TreeNode) -> int:
 
         def helper(node):
             if not node:
-                return
+                return 0
 
-            helper(node.left)
-            output.append(node.val)
-            helper(node.right)
+            left = 1 + helper(node.left)
+            right = 1 + helper(node.right)
 
-        helper(node=root)
-        if output:
-            output_node = TreeNode(output[0])
-            current = output_node
-            for obj in output[1:]:
-                current.right = TreeNode(obj)
-                current = current.right
+            return max(left, right)
 
-        return output_node
+        return helper(root)
 
     """
-    https://leetcode.com/problems/path-sum-ii/
+    https://leetcode.com/problems/maximum-depth-of-n-ary-tree/
     """
 
-    def pathSum(self, root: TreeNode, sum: int) -> List[List[int]]:
-        output = []
+    class Node:
+        def __init__(self, val=None, children=None):
+            self.val = val
+            self.children = children
 
-        def helper(node, sum, process=[]):
-            if not node:
-                return process
+    def maxDepth(self, root: 'Node') -> int:
+        if not root:
+            return 0
 
-            process.append(node.val)
-            if not node.left and not node.right and sum == node.val:
-                output.append(process)
+        output = [root, None]
+        if not root:
+            return 0
 
-            helper(node.left, sum - node.val, process)
-            helper(node.right, sum - node.val, process)
-            process.pop()
+        depth = 1
+        output = [root, None]
+        while len(output) != 0:
+            current = output.pop(0)
+            if current is not None:
+                for child in current.children:
+                    output.append(child)
 
-        helper(root, sum, [])
-        return output
+            elif current is None and len(output) != 0:
+                output.append(None)
+                depth = depth + 1
 
-    """
-    https://leetcode.com/problems/binary-tree-paths/
-    """
-
-    def binaryTreePaths(self, root: TreeNode) -> List[str]:
-        output = []
-
-        def helper(node, process=""):
-            if not node:
-                return
-
-            if process:
-                process = process + "->{node_val}".format(node_val=node.val)
-            else:
-                process = "{node_val}".format(node_val=node.val)
-
-            if not node.left and not node.right:
-                output.append(process)
-
-            helper(node.left, process)
-            helper(node.right, process)
-
-        helper(root, "")
-        return output
+        return depth
 
     """
     https://leetcode.com/problems/path-sum-iii/
     """
 
     def pathSum(self, root: TreeNode, sum: int) -> int:
-        # TODO: DP
-        pass
 
-    """https://leetcode.com/problems/recover-binary-search-tree/"""
+        def helper(node, sum):
+            if not node or sum < 0:
+                return 0
 
-    def recoverTree(self, root: TreeNode) -> None:
-        """
-        Do not return anything, modify root in-place instead.
-        """
+            if sum == 0:
+                return 1
 
-    # """
-    # https://leetcode.com/problems/all-elements-in-two-binary-search-trees/
-    # """
-    def getAllElements(self, root1: TreeNode, root2: TreeNode) -> List[int]:
+            if node.val < sum:
+                left = helper(node.left, sum - node.val)
+                right = helper(node.right, sum - node.val)
+                return left + right
 
-        # Traversing the BST and adding elements into the tree
-        def helper(root, output=[]):
-            if not root:
-                return output
+        return helper(root, sum)
 
-            helper(root.left, output)
-            output.append(root.val)
-            helper(root.right, output)
+    """
+    https://leetcode.com/problems/path-sum/
+    """
+
+    def hasPathSum(self, root: TreeNode, sum: int) -> bool:
+
+        def helper(node, sum):
+            import ipdb
+            ipdb.set_trace()
+            if not node or sum < 0:
+                return False
+
+            if sum == 0:
+                return True
+
+            left = helper(node.left, sum - node.val)
+            right = helper(node.right, sum - node.val)
+
+            if left: return True
+
+            if right: return True
+
+        return helper(root, sum)
+
+        index = index + 1
+
+    return [_[0] for _ in res]
+
+
+"""
+https://leetcode.com/problems/increasing-order-search-tree/
+"""
+
+
+def increasingBST(self, root: TreeNode) -> TreeNode:
+    output = []
+    output_node = None
+
+    def helper(node):
+        if not node:
+            return
+
+        helper(node.left)
+        output.append(node.val)
+        helper(node.right)
+
+    helper(node=root)
+    if output:
+        output_node = TreeNode(output[0])
+        current = output_node
+        for obj in output[1:]:
+            current.right = TreeNode(obj)
+            current = current.right
+
+    return output_node
+
+
+"""
+https://leetcode.com/problems/path-sum-ii/
+"""
+
+
+def pathSum(self, root: TreeNode, sum: int) -> List[List[int]]:
+    output = []
+
+    def helper(node, sum, process=[]):
+        if not node:
+            return process
+
+        process.append(node.val)
+        if not node.left and not node.right and sum == node.val:
+            output.append(process)
+
+        helper(node.left, sum - node.val, process)
+        helper(node.right, sum - node.val, process)
+        process.pop()
+
+    helper(root, sum, [])
+    return output
+
+
+"""
+https://leetcode.com/problems/binary-tree-paths/
+"""
+
+
+def binaryTreePaths(self, root: TreeNode) -> List[str]:
+    output = []
+
+    def helper(node, process=""):
+        if not node:
+            return
+
+        if process:
+            process = process + "->{node_val}".format(node_val=node.val)
+        else:
+            process = "{node_val}".format(node_val=node.val)
+
+        if not node.left and not node.right:
+            output.append(process)
+
+        helper(node.left, process)
+        helper(node.right, process)
+
+    helper(root, "")
+    return output
+
+
+"""
+https://leetcode.com/problems/path-sum-iii/
+"""
+
+
+def pathSum(self, root: TreeNode, sum: int) -> int:
+    # TODO: DP
+    pass
+
+
+"""https://leetcode.com/problems/recover-binary-search-tree/"""
+
+
+def recoverTree(self, root: TreeNode) -> None:
+    """
+    Do not return anything, modify root in-place instead.
+    """
+
+
+# """
+# https://leetcode.com/problems/all-elements-in-two-binary-search-trees/
+# """
+def getAllElements(self, root1: TreeNode, root2: TreeNode) -> List[int]:
+    # Traversing the BST and adding elements into the tree
+    def helper(root, output=[]):
+        if not root:
             return output
 
-        l1 = helper(root1, [])
-        l2 = helper(root2, [])
-        output = []
-        l1_index = 0
-        l2_index = 0
-
-        while l1_index < len(l1) and l2_index < len(l2):
-            l2_value = l2[l2_index]
-            l1_value = l1[l1_index]
-            if l1_value >= l2_value:
-                output.append(l2_value)
-                l2_index = l2_index + 1
-            elif l2_value >= l1_value:
-                output.append(l1_value)
-                l1_index = l1_index + 1
-
-        while l1_index < len(l1):
-            output.append(l1[l1_index])
-            l1_index += 1
-
-        while l2_index < len(l2):
-            output.append(l2[l2_index])
-            l2_index += 1
-
+        helper(root.left, output)
+        output.append(root.val)
+        helper(root.right, output)
         return output
 
-    """https://leetcode.com/problems/flip-equivalent-binary-trees/"""
+    l1 = helper(root1, [])
+    l2 = helper(root2, [])
+    output = []
+    l1_index = 0
+    l2_index = 0
 
-    # FAILED Approach
-    # def flipEquiv(self, root1: TreeNode, root2: TreeNode) -> bool:
-    #
-    #     # Do a level order traversal and compare the elements
-    #     queue1 = [root1, None]
-    #     queue2 = [root2, None]
-    #     previous_set1 = set()
-    #     previous_set2 = set()
-    #     while queue1 and queue2:
-    #         c1 = queue1.pop(0)
-    #         c2 = queue2.pop(0)
-    #
-    #         if c1 is None and c2 is None:
-    #             if not previous_set2.difference(previous_set1):
-    #                 previous_set1 = set()
-    #                 previous_set2 = set()
-    #                 if queue1:
-    #                     queue1.append(None)
-    #                 if queue2:
-    #                     queue2.append(None)
-    #             else:
-    #                 return False
-    #         elif c1 and c2:
-    #             previous_set1.add(c1.val)
-    #             previous_set2.add(c2.val)
-    #
-    #             if c1.left:
-    #                 queue1.append(c1.left)
-    #
-    #             if c1.right:
-    #                 queue1.append(c1.right)
-    #
-    #             if c2.left:
-    #                 queue2.append(c2.left)
-    #
-    #             if c2.right:
-    #                 queue2.append(c2.right)
-    #         else:
-    #             return False
-    #
-    #     return True
+    while l1_index < len(l1) and l2_index < len(l2):
+        l2_value = l2[l2_index]
+        l1_value = l1[l1_index]
+        if l1_value >= l2_value:
+            output.append(l2_value)
+            l2_index = l2_index + 1
+        elif l2_value >= l1_value:
+            output.append(l1_value)
+            l1_index = l1_index + 1
 
-    # TODO: Come back at this
-    def flipEquiv(self, root1: TreeNode, root2: TreeNode) -> bool:
-        pass
+    while l1_index < len(l1):
+        output.append(l1[l1_index])
+        l1_index += 1
+
+    while l2_index < len(l2):
+        output.append(l2[l2_index])
+        l2_index += 1
+
+    return output
+
+
+"""https://leetcode.com/problems/flip-equivalent-binary-trees/"""
+
+
+# FAILED Approach
+# def flipEquiv(self, root1: TreeNode, root2: TreeNode) -> bool:
+#
+#     # Do a level order traversal and compare the elements
+#     queue1 = [root1, None]
+#     queue2 = [root2, None]
+#     previous_set1 = set()
+#     previous_set2 = set()
+#     while queue1 and queue2:
+#         c1 = queue1.pop(0)
+#         c2 = queue2.pop(0)
+#
+#         if c1 is None and c2 is None:
+#             if not previous_set2.difference(previous_set1):
+#                 previous_set1 = set()
+#                 previous_set2 = set()
+#                 if queue1:
+#                     queue1.append(None)
+#                 if queue2:
+#                     queue2.append(None)
+#             else:
+#                 return False
+#         elif c1 and c2:
+#             previous_set1.add(c1.val)
+#             previous_set2.add(c2.val)
+#
+#             if c1.left:
+#                 queue1.append(c1.left)
+#
+#             if c1.right:
+#                 queue1.append(c1.right)
+#
+#             if c2.left:
+#                 queue2.append(c2.left)
+#
+#             if c2.right:
+#                 queue2.append(c2.right)
+#         else:
+#             return False
+#
+#     return True
+
+# TODO: Come back at this
+def flipEquiv(self, root1: TreeNode, root2: TreeNode) -> bool:
+    pass
 
     """https://leetcode.com/problems/balanced-binary-tree/"""
 

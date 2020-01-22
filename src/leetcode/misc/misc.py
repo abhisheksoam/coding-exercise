@@ -219,6 +219,48 @@ class Solution:
 
         return previous
 
+        """
+        https://leetcode.com/problems/count-of-smaller-numbers-after-self/
+        """
+
+        def countSmaller(self, nums: List[int]) -> List[int]:
+            def binary_search(input, target, l, r):
+                if l > r:
+                    return 0
+                else:
+                    m = l + (r - l) / 2
+                    m = int(m)
+
+                    if input[m] == target:
+                        return m
+                    elif target > input[m]:
+                        return binary_search(input, target, m + 1, r)
+                    elif target < input[m]:
+                        return binary_search(input, target, l, m - 1)
+
+            size = len(nums)
+            res = [0] * (size)
+            # Sort the list and remove the duplicates
+            sorted_list = list(set(sorted(nums)))
+            response = {}
+            for i in range(0, size):
+                element = nums[i]
+                if response.get(element, None):
+                    res[i] = response.get(element)
+                else:
+                    index = binary_search(sorted_list, element, 0, len(sorted_list) - 1)
+                    res[i] = index
+                    response[element] = index
+                    sorted_list.remove(element)
+
+            return res
+
+s = Solution()
+print(s.countSmaller(
+    [26, 78, 27, 100, 33, 67, 90, 23, 66, 5, 38, 7, 35, 23, 52, 22, 83, 51, 98, 69, 81, 32, 78, 28, 94, 13, 2, 97,
+     3,
+     76, 99, 51, 9, 21, 84, 66, 65, 36, 100, 41]))
+
 
 s = Solution()
 print(s.generate(5))
@@ -242,3 +284,13 @@ class MedianFinder:
 
     def findMedian(self) -> float:
         pass
+
+# node = ListNode(1)
+# node.next = ListNode(2)
+# node.next.next = ListNode(3)
+# node.next.next.next = ListNode(4)
+# node.next.next.next.next = ListNode(5)
+
+# s.print_ll(node)
+# print('\n')
+# s.print_ll(s.removeNthFromEnd(node, 1))
