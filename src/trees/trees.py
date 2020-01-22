@@ -460,6 +460,7 @@ class Solution:
         return output
 
     """https://leetcode.com/problems/flip-equivalent-binary-trees/"""
+
     # FAILED Approach
     # def flipEquiv(self, root1: TreeNode, root2: TreeNode) -> bool:
     #
@@ -506,12 +507,112 @@ class Solution:
     def flipEquiv(self, root1: TreeNode, root2: TreeNode) -> bool:
         pass
 
+    """https://leetcode.com/problems/balanced-binary-tree/"""
+
+    def isBalanced(self, root: TreeNode) -> bool:
+        def height(node):
+            if not node:
+                return 0
+
+            l_height = 1 + height(node.left)
+            r_height = 1 + height(node.right)
+            return max(l_height, r_height)
+
+        if not root:
+            return True
+
+        l_height = height(root.left)
+        r_height = height(root.right)
+        if abs(l_height - r_height) > 1:
+            return False
+        else:
+            l = self.isBalanced(root.left)
+            r = self.isBalanced(root.right)
+            if l and r:
+                return True
+            else:
+                return False
+
+    """https://leetcode.com/problems/minimum-depth-of-binary-tree/"""
+
+    # TODO:
+    def minDepth(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+
+        l = 1 + self.minDepth(root.left)
+        r = 1 + self.minDepth(root.right)
+
+        return min(1 + self.minDepth(root.left), 1 + self.minDepth(root.right))
+
+    """https://leetcode.com/problems/maximum-difference-between-node-and-ancestor/"""
+
+    def maxAncestorDiff(self, root: TreeNode) -> int:
+        res = float("-inf")
+
+        def helper(node, val):
+            if not node:
+                return res
+
+            return max(abs(val - node.val), res, helper(node.left, val), helper(node.right, val))
+
+        queue = [root, None]
+
+        while queue:
+            current = queue.pop(0)
+            if current:
+                res = max(res, helper(current.left, current.val), helper(current.right, current.val))
+                if current.left:
+                    queue.append(current.left)
+
+                if current.right:
+                    queue.append(current.right)
+
+            else:
+                if queue:
+                    queue.append(None)
+        return res
+
+    """
+    https://leetcode.com/problems/add-one-row-to-tree/
+    """
+
+    # TODO
+    def addOneRow(self, root: TreeNode, v: int, d: int) -> TreeNode:
+
+        def helper(node, v, d):
+            if not node:
+                return
+
+            if d == 1:
+                pass
+
+    """
+    https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/
+    """
+
+    def sortedArrayToBST(self, nums: List[int]) -> TreeNode:
+        if not nums:
+            return None
+        mid = len(nums) // 2
+        node = TreeNode(nums[mid])
+        node.left = self.sortedArrayToBST(nums[:mid])
+        node.right = self.sortedArrayToBST(nums[mid + 1:])
+        return node
+
 
 s = Solution()
-t1 = TreeNode(1)
-t1.left = TreeNode(0)
-t1.right = TreeNode(3)
+print(s.levelOrder(s.sortedArrayToBST([0,1,2,3,4,5])))
 
-t2 = TreeNode(2)
-t2.left = TreeNode(1)
-t2.right = TreeNode(4)
+# t1 = TreeNode(8)
+# t1.left = TreeNode(3)
+# t1.left.left = TreeNode(1)
+# t1.left.right = TreeNode(6)
+# t1.left.right.left = TreeNode(4)
+# t1.left.right.right = TreeNode(7)
+#
+# t1.right = TreeNode(10)
+# t1.right.right = TreeNode(14)
+# t1.right.right.left = TreeNode(13)
+#
+# print(s.maxAncestorDiff(t1))

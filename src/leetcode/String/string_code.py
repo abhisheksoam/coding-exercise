@@ -102,6 +102,15 @@ class Solution:
                 if product >= 10:
                     pass
 
+    """
+    https://leetcode.com/problems/basic-calculator-ii/
+    """
+
+    def calculate(self, s: str) -> int:
+        operations = ["+", "-", "*", "/"]
+        stack = s
+        operator = None
+        res = ""
 
 s = Solution()
 s.convert("PAYPALISHIRING", 3)
