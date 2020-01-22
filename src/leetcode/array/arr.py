@@ -85,8 +85,21 @@ class Solution:
     """
 
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
-        pass
+        intervals = sorted(intervals, key=lambda x: x[0])
+        size = len(intervals)
+        merge = []
+        remove_index = []
+        for i in range(0, size - 1):
+            current = intervals[i]
+            next = intervals[i + 1]
 
+            if next[0] <= current[1] <= next[1]:
+                merge.append([current[0], next[1]])
+                remove_index.append(i)
+                remove_index.append(i + 1)
+
+        intervals.extend(merge)
+        #
 
 s = Solution()
-s.moveZeroes([0, 1, 0, 3, 12])
+s.merge([[1, 3], [2, 6], [15, 18], [8, 10]])
