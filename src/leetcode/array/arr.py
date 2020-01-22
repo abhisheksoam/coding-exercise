@@ -34,6 +34,59 @@ class Solution:
     def findDuplicate(self, nums: List[int]) -> int:
         pass
 
+    """
+    https://leetcode.com/problems/count-of-smaller-numbers-after-self/
+    """
+
+    def countSmaller(self, nums: List[int]) -> List[int]:
+        def binary_search(input, target, l, r):
+            if l > r:
+                return -1
+            else:
+                m = l + (r - l) // 2
+
+                if input[m] == target:
+                    index = m - 1
+                    while index >= l and input[index] == target:
+                        index = index - 1
+
+                    index = index + 1
+                    return index
+
+                elif target > input[m]:
+                    return binary_search(input, target, m + 1, r)
+                elif target < input[m]:
+                    return binary_search(input, target, l, m - 1)
+
+        size = len(nums)
+        res = [0] * (size)
+        # Sort the list and remove the duplicates
+        sorted_list = sorted(nums)
+        for i in range(0, size):
+            element = nums[i]
+            index = binary_search(sorted_list, element, 0, len(sorted_list) - 1)
+            if index != -1:
+                res[i] = index
+
+            sorted_list.pop(index)
+
+        return res
+
+    """
+    https://leetcode.com/problems/subsets/
+    """
+
+    # TODO:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        pass
+
+    """
+    https://leetcode.com/problems/merge-intervals/
+    """
+
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        pass
+
 
 s = Solution()
 s.moveZeroes([0, 1, 0, 3, 12])
