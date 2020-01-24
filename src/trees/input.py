@@ -1,4 +1,4 @@
-from .trees import TreeNode, Solution
+# from .trees import TreeNode, Solution
 
 
 def stringToTreeNode(input):
@@ -7,7 +7,7 @@ def stringToTreeNode(input):
     if not input:
         return None
 
-    inputValues = [s.strip() for s in input.split(',')]
+    inputValues = [s.strip() for s in input.split(",")]
     root = TreeNode(int(inputValues[0]))
     nodeQueue = [root]
     front = 0
@@ -38,9 +38,10 @@ def stringToTreeNode(input):
 def main():
     import sys
     import io
+
     def readlines():
-        for line in io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8'):
-            yield line.strip('\n')
+        for line in io.TextIOWrapper(sys.stdin.buffer, encoding="utf-8"):
+            yield line.strip("\n")
 
     lines = readlines()
     while True:
@@ -50,12 +51,12 @@ def main():
 
             ret = Solution().hasPathSum(root, sum)
 
-            out = (ret);
+            out = ret
         except StopIteration:
             break
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
 
 from typing import List
@@ -297,6 +298,7 @@ class Solution:
         while len(output) != 0:
             current = output.pop(0)
             if current is not None:
+                pass
 
     def hasPathSum(self, root: TreeNode, sum: int) -> bool:
         def helper(node, sum):
@@ -414,7 +416,7 @@ class Solution:
                 try:
                     print(res[index])
                     res[index][0] = (res[index][0] * res[index][1] + current.val) / (
-                            res[index][1] + 1
+                        res[index][1] + 1
                     )
                     res[index][1] = res[index][1] + 1
                 except:
@@ -432,7 +434,6 @@ class Solution:
         return depth
 
     def maxDepth(self, root: TreeNode) -> int:
-
         def helper(node):
             if not node:
                 return 0
@@ -453,7 +454,7 @@ class Solution:
             self.val = val
             self.children = children
 
-    def maxDepth(self, root: 'Node') -> int:
+    def maxDepth(self, root: "Node") -> int:
         if not root:
             return 0
 
@@ -480,7 +481,6 @@ class Solution:
     """
 
     def pathSum(self, root: TreeNode, sum: int) -> int:
-
         def helper(node, sum):
             if not node or sum < 0:
                 return 0
@@ -500,9 +500,9 @@ class Solution:
     """
 
     def hasPathSum(self, root: TreeNode, sum: int) -> bool:
-
         def helper(node, sum):
             import ipdb
+
             ipdb.set_trace()
             if not node or sum < 0:
                 return False
@@ -513,15 +513,17 @@ class Solution:
             left = helper(node.left, sum - node.val)
             right = helper(node.right, sum - node.val)
 
-            if left: return True
+            if left:
+                return True
 
-            if right: return True
+            if right:
+                return True
 
         return helper(root, sum)
 
         index = index + 1
 
-    return [_[0] for _ in res]
+        return [_[0] for _ in res]
 
 
 """
@@ -759,14 +761,23 @@ def flipEquiv(self, root1: TreeNode, root2: TreeNode) -> bool:
             if not node:
                 return res
 
-            return max(abs(val - node.val), res, helper(node.left, val), helper(node.right, val))
+            return max(
+                abs(val - node.val),
+                res,
+                helper(node.left, val),
+                helper(node.right, val),
+            )
 
         queue = [root, None]
 
         while queue:
             current = queue.pop(0)
             if current:
-                res = max(res, helper(current.left, current.val), helper(current.right, current.val))
+                res = max(
+                    res,
+                    helper(current.left, current.val),
+                    helper(current.right, current.val),
+                )
                 if current.left:
                     queue.append(current.left)
 
@@ -784,7 +795,6 @@ def flipEquiv(self, root1: TreeNode, root2: TreeNode) -> bool:
 
     # TODO
     def addOneRow(self, root: TreeNode, v: int, d: int) -> TreeNode:
-
         def helper(node, v, d):
             if not node:
                 return
@@ -802,12 +812,12 @@ def flipEquiv(self, root1: TreeNode, root2: TreeNode) -> bool:
         mid = len(nums) // 2
         node = TreeNode(nums[mid])
         node.left = self.sortedArrayToBST(nums[:mid])
-        node.right = self.sortedArrayToBST(nums[mid + 1:])
+        node.right = self.sortedArrayToBST(nums[mid + 1 :])
         return node
 
 
 s = Solution()
-print(s.levelOrder(s.sortedArrayToBST([0,1,2,3,4,5])))
+print(s.levelOrder(s.sortedArrayToBST([0, 1, 2, 3, 4, 5])))
 
 # t1 = TreeNode(8)
 # t1.left = TreeNode(3)

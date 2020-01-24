@@ -112,5 +112,6 @@ class Solution:
         operator = None
         res = ""
 
+
 s = Solution()
 s.convert("PAYPALISHIRING", 3)

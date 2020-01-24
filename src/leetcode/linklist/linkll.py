@@ -4,11 +4,13 @@ class ListNode:
         self.val = x
         self.next = None
 
+
 class Node:
-    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+    def __init__(self, x: int, next: "Node" = None, random: "Node" = None):
         self.val = int(x)
         self.next = next
         self.random = random
+
 
 class Solution:
     """
@@ -27,5 +29,5 @@ class Solution:
             self.random = random
     """
 
-    def copyRandomList(self, head: 'Node') -> 'Node':
+    def copyRandomList(self, head: "Node") -> "Node":
         pass

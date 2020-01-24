@@ -78,7 +78,7 @@ class Solution:
 
     def longestPalindrome(self, s: str) -> str:
         palindromic_string = {}
-        p_string = ''
+        p_string = ""
         n = len(s)
         print(n)
         for i in range(0, n):
@@ -103,10 +103,10 @@ class Solution:
         try:
             range = (-2147483648, 2147483647)
             x_str = str(x)
-            reverse_string = ''
+            reverse_string = ""
             negative = False
             for i in reversed(x_str):
-                if i == '-':
+                if i == "-":
                     negative = True
                 else:
                     reverse_string = reverse_string + i
@@ -127,22 +127,35 @@ class Solution:
     def myAtoi(self, str: str) -> int:
         try:
             str = str.lstrip()
-            numerical_chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '-']
+            numerical_chars = [
+                "0",
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9",
+                "+",
+                "-",
+            ]
             int_max_value = 2147483647
             int_min_value = -2147483648
 
             conversion_started = False
             first_char = None
-            numerical_string = ''
+            numerical_string = ""
             negative_sign = None
             for index, char in enumerate(str):
 
                 # First char check
                 if first_char is None:
                     if char in numerical_chars:
-                        if char == '-':
+                        if char == "-":
                             negative_sign = True
-                        elif char == '+':
+                        elif char == "+":
                             pass
                         else:
                             numerical_string = numerical_string + char
@@ -150,7 +163,7 @@ class Solution:
                         conversion_started = True
                         first_char = True
                     else:
-                        print('here')
+                        print("here")
                         return 0
 
                 if conversion_started:
@@ -162,7 +175,7 @@ class Solution:
             print(negative_sign)
             value = int(numerical_string)
             if negative_sign is True:
-                value = - value
+                value = -value
                 print(value)
 
             print(value)
@@ -369,7 +382,7 @@ class Solution:
     def expand_around_center(self, s, left, right):
         output = ""
         while left >= 0 and right < len(s) and s[left] == s[right]:
-            output = s[left:right + 1]
+            output = s[left : right + 1]
             left = left - 1
             right = right + 1
 
@@ -503,8 +516,8 @@ class Solution:
         previous_value = nums[0]
         for index, value in enumerate(nums[1:]):
             if value - previous_value < 0:
-                right_array = nums[index + 1:]
-                left_array = nums[0:index + 1]
+                right_array = nums[index + 1 :]
+                left_array = nums[0 : index + 1]
                 break
 
         if left_array is None and right_array is None:
@@ -622,7 +635,7 @@ class Solution:
                             l += 1
                         while r > l and nums[r] == nums[r - 1]:
                             r -= 1
-                        l += 1;
+                        l += 1
                         r -= 1
                     elif s > 0:
                         r -= 1
@@ -631,6 +644,7 @@ class Solution:
         return res
 
     def countSmaller(self, nums: List[int]) -> List[int]:
+        pass
 
 
 # nums = [7, 5, -8, -6, -13, 7, 10, 1, 1, -4, -14, 0, -1, -10, 1, -13, -4, 6, -11, 8, -6, 0, 0, -5, 0, 11, -9, 8, 2, -6,
@@ -639,9 +653,9 @@ class Solution:
 #         0, -11, 3, -15, -15, 7, 0, 0, 13, -7, -12, 9, 9, -3, 14, -1, 2, 5, 2, -9, -3, 1, 7, -12, -3, -1, 1, -2, 0, 12,
 #         5, 7, 8, -7, 7, 8, 7, -15]
 
-nums = [-1, 0, 1, 2, -1, -4]
-s = Solution()
-print(s.threeSum(nums))
+# nums = [-1, 0, 1, 2, -1, -4]
+# s = Solution()
+# print(s.threeSum(nums))
 
 # print(s.myAtoi("-91283472332"))
 # nums = [-1, 0, 1, 2, -1, -4]
