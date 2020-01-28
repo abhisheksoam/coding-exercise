@@ -121,7 +121,7 @@ class Solution:
     #
     #     return intervals
     #     """
-
+    # TODO :
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
         merge = []
         for current_interval in sorted(intervals, key=lambda e: e[0]):
@@ -166,6 +166,58 @@ class Solution:
         res = [value for value in process.values()]
         del process
         return res
+
+    """
+    https://leetcode.com/problems/fizz-buzz/
+    """
+
+    def fizzBuzz(self, n: int) -> List[str]:
+        res = []
+        for i in range(1, n + 1):
+            value = str(i)
+            isThreeMultiple = i % 3
+            isFiveMultiple = i % 5
+
+            if isFiveMultiple == 0 and isThreeMultiple == 0:
+                value = "FizzBuzz"
+            elif isFiveMultiple == 0 and isThreeMultiple != 0:
+                value = "Buzz"
+            elif isThreeMultiple == 0 and isFiveMultiple != 0:
+                value = "Fizz"
+
+            res.append(value)
+
+        return res
+
+    """
+    https://leetcode.com/problems/rotate-array/
+    """
+
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        size = len(nums)
+        bisection_point = size - k
+        index = 0
+        right_array = nums[bisection_point:]
+        left_arrary = nums[:bisection_point]
+        for value in right_array:
+            nums[index] = value
+            index += 1
+
+        for value in left_arrary:
+            nums[index] = value
+            index += 1
+
+    """
+    https://leetcode.com/problems/spiral-matrix/
+    """
+
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        res = []
+        directions = ["R", "D", "L", "U"]
+        default_direction_index = 0
 
 
 s = Solution()
