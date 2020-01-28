@@ -13,6 +13,7 @@ class Solution:
             return helper(dividend - divisor, divisor, quotient + 1)
 
         import math
+
         if divisor == 1 or divisor == -1:
             result = int(math.fabs(dividend))
         else:
@@ -29,22 +30,53 @@ class Solution:
 
         return result
 
+    """
+    https://leetcode.com/problems/powx-n/
+    """
+
     def myPow(self, x: float, n: int) -> float:
+        def divide_conq(input):
+            if not input:
+                return []
+
+            size = len(input)
+            l = 0
+
+        if n == 0:
+            return 1
+
         bottoms_up = n < 0
         negative = x < 0 and n % 2 != 0
 
-        result = x
-        while n > 1:
-            result = result * x
-            n = n - 1
+        x = abs(x)
+        n = abs(n)
 
-        if bottoms_up:
-            result = 1 / result
+        input = [x] * n
 
-        if negative:
-            result = - result
+        # if bottoms_up:
+        #     result = 1 / result
+        #
+        # if negative:
+        #     result = - result
+        #
+        # return result
 
-        return result
+    """
+    https://leetcode.com/problems/excel-sheet-column-number/
+    """
+
+    def titleToNumber(self, s: str) -> int:
+        pass
+
+    """
+    https://leetcode.com/problems/sqrtx/
+    """
+
+    # TODO:
+    """
+    DP
+    https://leetcode.com/problems/coin-change/
+    """
 
 
 s = Solution()

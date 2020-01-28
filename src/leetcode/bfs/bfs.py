@@ -11,8 +11,6 @@ class Solution:
         if not grid:
             return res
 
-        
-
 
 i = [[2, 1, 1], [1, 1, 0], [0, 1, 1]]
 s = Solution()
