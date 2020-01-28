@@ -84,6 +84,7 @@ class Solution:
     https://leetcode.com/problems/merge-intervals/
     """
 
+    # TODO:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
         intervals = sorted(intervals, key=lambda x: x[0])
         size = len(intervals)
@@ -101,5 +102,13 @@ class Solution:
         intervals.extend(merge)
         #
 
-s = Solution()
-s.merge([[1, 3], [2, 6], [15, 18], [8, 10]])
+    """
+    https://leetcode.com/problems/wiggle-sort-ii/
+    """
+
+    def wiggleSort(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+
+
