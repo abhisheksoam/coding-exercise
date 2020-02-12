@@ -106,12 +106,63 @@ class Solution:
     https://leetcode.com/problems/basic-calculator-ii/
     """
 
+    # TODO:
     def calculate(self, s: str) -> int:
         operations = ["+", "-", "*", "/"]
         stack = s
         operator = None
         res = ""
 
+    """
+    https://leetcode.com/problems/minimum-window-substring/
+    """
+
+    # TODO: Complete the problem
+    def minWindow(self, s: str, t: str) -> str:
+        from collections import defaultdict
+
+        tmapped = defaultdict(dict)
+        for char in t:
+            tmapped[char] = True
+        t_size = len(t)
+        next_second_pointer = None
+        window_char_count = 0
+        character_matched = 0
+        min_window = float("inf")
+        min_substring = ""
+        substring = ""
+        i = 0
+        size = len(s)
+        while i < size:
+            char = s[i]
+            if char in tmapped:
+                substring = substring + char
+                window_char_count += 1
+                character_matched += 1
+
+                if character_matched == 2:
+                    next_second_pointer = i - 1
+
+                if character_matched == t_size:
+                    if window_char_count < min_window:
+                        min_substring = substring
+                    min_window = min(min_window, window_char_count)
+                    i = next_second_pointer
+                    next_second_pointer = None
+                    substring = ""
+                    character_matched = 0
+                    window_char_count = 0
+            else:
+                if character_matched is not 0:
+                    substring = substring + char
+                    window_char_count += 1
+
+            if i is None:
+                break
+            else:
+                i += 1
+        return min_substring
+
 
 s = Solution()
-s.convert("PAYPALISHIRING", 3)
+print(s.minWindow("bba", "ab"))

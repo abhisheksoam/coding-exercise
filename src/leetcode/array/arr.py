@@ -121,7 +121,7 @@ class Solution:
     #
     #     return intervals
     #     """
-    # TODO :
+
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
         merge = []
         for current_interval in sorted(intervals, key=lambda e: e[0]):
@@ -166,6 +166,42 @@ class Solution:
         res = [value for value in process.values()]
         del process
         return res
+
+    """
+    https://leetcode.com/problems/wiggle-sort-ii/
+    """
+
+    def wiggleSort(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+
+    """
+    https://leetcode.com/problems/spiral-matrix/
+    """
+
+    # TODO:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        def move_next(direction, current_cordinate):
+            if direction == "R":
+                current_cordinate[1] += 1
+            elif direction == "D":
+                current_cordinate[0] += 1
+            elif direction == "L":
+                current_cordinate[1] -= 1
+            elif direction == "T":
+                current_cordinate[0] -= 1
+
+            return current_cordinate
+
+        directions = ["R", "D", "L", "T"]
+        direction_index = 0
+        current_cordinate = [0, 0]
+        size_of_matrix = len(matrix) * len(matrix[0])
+        res = []
+        while True:
+            if len(res) == size_of_matrix:
+                break
 
     """
     https://leetcode.com/problems/fizz-buzz/
@@ -214,12 +250,91 @@ class Solution:
     https://leetcode.com/problems/spiral-matrix/
     """
 
-    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
-        res = []
-        directions = ["R", "D", "L", "U"]
-        default_direction_index = 0
+    """
+    https://leetcode.com/problems/implement-strstr/
+    """
+
+    # Inbuild method used
+    def strStr(self, haystack: str, needle: str) -> int:
+        try:
+            return haystack.index(needle)
+        except:
+            return -1
+
+    def strStr(self, haystack: str, needle: str) -> int:
+
+        if haystack == "" and needle == "":
+            return 0
+
+        if haystack == "" and needle != "":
+            return -1
+
+        if haystack != "" and needle == "":
+            return -1
+
+        h_index = 0
+        n_index = 0
+        size = len(haystack)
+        occurence_index = -1
+        char_matched = 0
+        needle_len = len(needle)
+
+        while h_index < size:
+            if haystack[h_index] == needle[n_index]:
+                if occurence_index == -1:
+                    occurence_index = h_index
+
+                h_index += 1
+                n_index += 1
+                char_matched += 1
+                if char_matched == needle_len:
+                    break
+            else:
+                if occurence_index != -1 and char_matched != needle_len:
+                    occurence_index = -1
+                    n_index = 0
+                    char_matched = 0
+
+                h_index += 1
+
+        return occurence_index
+
+    """
+    https://leetcode.com/problems/missing-number/
+    """
+
+    def missingNumber(self, nums: List[int]) -> int:
+        size = len(nums)
+        sum = size * (size + 1) / 2
+        for value in nums:
+            sum -= value
+
+        return int(sum)
+
+    """
+    https://leetcode.com/problems/largest-number/
+    """
+
+    def largestNumber(self, nums: List[int]) -> str:
+        if not any(nums):
+            return "0"
+
+        def helper(s1, s2):
+            return str(s1) + str(s2) > str(s2) + str(s1)
+
+        size = len(nums)
+        for i in range(0, size):
+            for j in range(i, size):
+                if not helper(nums[i], nums[j]):
+                    temp = nums[i]
+                    nums[i] = nums[j]
+                    nums[j] = temp
+
+        return "".join(map(str, nums))
 
 
-s = Solution()
-# print(s.merge([[1, 4], [0, 2], [3, 5]]))
-print(s.groupAnagrams(["eat", "tea", "tan", "ate", "nat", "bat"]))
+S = Solution()
+print(S.largestNumber([0, 0]))
+# data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+# print(S.spiralOrder(data))
+# print(S.strStr("needlle", "ll"))

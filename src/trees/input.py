@@ -35,29 +35,29 @@ def stringToTreeNode(input):
     return root
 
 
-def main():
-    import sys
-    import io
-
-    def readlines():
-        for line in io.TextIOWrapper(sys.stdin.buffer, encoding="utf-8"):
-            yield line.strip("\n")
-
-    lines = readlines()
-    while True:
-        try:
-            line = next(lines)
-            root = stringToTreeNode(line)
-
-            ret = Solution().hasPathSum(root, sum)
-
-            out = ret
-        except StopIteration:
-            break
-
-
-if __name__ == "__main__":
-    main()
+# def main():
+#     import sys
+#     import io
+#
+#     def readlines():
+#         for line in io.TextIOWrapper(sys.stdin.buffer, encoding="utf-8"):
+#             yield line.strip("\n")
+#
+#     lines = readlines()
+#     while True:
+#         try:
+#             line = next(lines)
+#             root = stringToTreeNode(line)
+#
+#             ret = Solution().hasPathSum(root, sum)
+#
+#             out = ret
+#         except StopIteration:
+#             break
+#
+#
+# if __name__ == "__main__":
+#     main()
 
 from typing import List
 
@@ -815,19 +815,53 @@ def flipEquiv(self, root1: TreeNode, root2: TreeNode) -> bool:
         node.right = self.sortedArrayToBST(nums[mid + 1 :])
         return node
 
+    """
+    https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/
+    """
 
-s = Solution()
-print(s.levelOrder(s.sortedArrayToBST([0, 1, 2, 3, 4, 5])))
+    def constructFromPrePost(self, pre: List[int], post: List[int]) -> TreeNode:
+        pass
 
-# t1 = TreeNode(8)
-# t1.left = TreeNode(3)
-# t1.left.left = TreeNode(1)
-# t1.left.right = TreeNode(6)
-# t1.left.right.left = TreeNode(4)
-# t1.left.right.right = TreeNode(7)
-#
-# t1.right = TreeNode(10)
-# t1.right.right = TreeNode(14)
-# t1.right.right.left = TreeNode(13)
-#
-# print(s.maxAncestorDiff(t1))
+
+"""
+https://leetcode.com/problems/serialize-and-deserialize-binary-tree/
+"""
+# TODO:
+
+
+class Codec:
+    def serialize(self, root):
+        import pickle
+
+        """Encodes a tree to a single string.
+        
+        :type root: TreeNode
+        :rtype: str
+        """
+        return pickle.dump(root)
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+
+        :type data: str
+        :rtype: TreeNode
+        """
+        import pickle
+
+        return pickle.load(data)
+
+
+t1 = TreeNode(8)
+t1.left = TreeNode(3)
+t1.left.left = TreeNode(1)
+t1.left.right = TreeNode(6)
+t1.left.right.left = TreeNode(4)
+t1.left.right.right = TreeNode(7)
+
+t1.right = TreeNode(10)
+t1.right.right = TreeNode(14)
+t1.right.right.left = TreeNode(13)
+
+# s = Solution()
+c = Codec()
+c.serialize(t1)
