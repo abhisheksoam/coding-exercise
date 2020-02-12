@@ -78,6 +78,21 @@ class Solution:
     https://leetcode.com/problems/coin-change/
     """
 
+    """
+    https://leetcode.com/problems/power-of-three/
+    """
+
+    def isPowerOfThree(self, n: int) -> bool:
+        def helper(n):
+            if n == 1:
+                return True
+            elif n < 1:
+                return False
+
+            return helper(n / 3)
+
+        return helper(n)
+
 
 s = Solution()
 print(s.divide(-2147483648, -1))
