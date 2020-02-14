@@ -22,7 +22,7 @@ class Solution:
         return res
 
     """
-    https://leetcode.com/problems/subsets/
+    https://leetcode.com/problems/combination-sum/
     """
 
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
@@ -45,7 +45,35 @@ class Solution:
         backtrack(candidates, target)
         return res
 
+    """
+    https://leetcode.com/problems/combination-sum-ii/
+    """
+    # TODO:
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        dict = {}
+
+        def backtrack(list, target, start, tmp=[]):
+
+            if target < 0:
+                return
+
+            if target == 0 and dict.get(tuple(sorted(tmp))) is None:
+                dict[tuple(sorted(tmp))] = True
+
+            for i in range(start, len(list)):
+                if i > start and list[i] == list[i - 1]:
+                    continue
+
+                element = list[i]
+                tmp.append(element)
+                backtrack(list, target - element, start + 1, tmp)
+                del tmp[-1]
+
+        backtrack(sorted(candidates), target, 0)
+        return [list(_) for _ in dict.keys()]
+
 
 s = Solution()
 # print(s.permute([1, 0, 2]))
-print(s.combinationSum([2, 3, 5], 8))
+# print(s.combinationSum([2, 3, 5], 8))
+print(s.combinationSum2([1, 2], 4))
