@@ -46,34 +46,62 @@ class Solution:
         return res
 
     """
-    https://leetcode.com/problems/combination-sum-ii/
+    https://leetcode.com/problems/permutations-ii/    
     """
-    # TODO:
-    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
-        dict = {}
 
-        def backtrack(list, target, start, tmp=[]):
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        """
+        Approach: Backtracking, breaking the call if finding the same element
+        at previous position with the exception of handling the first starting position.
+        Selecting the candidate solution when start,end index are equal.
 
-            if target < 0:
+        Using set to handle the duplicate response
+        """
+        result = set()
+
+        def helper(list, start, end):
+            if start == end:
+                result.add(tuple(list))
                 return
 
-            if target == 0 and dict.get(tuple(sorted(tmp))) is None:
-                dict[tuple(sorted(tmp))] = True
-
-            for i in range(start, len(list)):
-                if i > start and list[i] == list[i - 1]:
+            for i in range(start, end + 1):
+                if i != start and list[start] == list[i]:
                     continue
 
+                list[start], list[i] = list[i], list[start]
+                helper(list, start + 1, end)
+                list[start], list[i] = list[i], list[start]
+
+        helper(nums, 0, len(nums) - 1)
+        return [list(_) for _ in result]
+
+    """
+    https://leetcode.com/problems/combination-sum-ii/
+    """
+
+    def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
+        result = set()
+
+        def backtrack(list, target, start, end, tmp=[]):
+            if target == 0:
+                result.add(tuple(tmp))
+                return
+
+            if target < 0 or start > end:
+                return
+
+            for i in range(start, end):
                 element = list[i]
                 tmp.append(element)
-                backtrack(list, target - element, start + 1, tmp)
+                backtrack(list, target - element, i + 1, end, tmp)
                 del tmp[-1]
 
-        backtrack(sorted(candidates), target, 0)
-        return [list(_) for _ in dict.keys()]
+        backtrack(sorted(candidates), target, 0, len(candidates))
+        return [list(_) for _ in result]
 
 
 s = Solution()
 # print(s.permute([1, 0, 2]))
 # print(s.combinationSum([2, 3, 5], 8))
-print(s.combinationSum2([1, 2], 4))
+# print(s.combinationSum2([], 0))
+# print(s.permuteUnique([2, 2, 1, 1]))

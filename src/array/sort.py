@@ -48,12 +48,27 @@ class Sort:
         return output
 
     def quick_sort(self, input):
-        pass
+        if not input:
+            return input
+
+        pivot_element = input[0]
+        left = []
+        right = []
+        for i in range(1, len(input)):
+            if input[i] <= pivot_element:
+                left.append(input[i])
+            else:
+                right.append(input[i])
+
+        left = self.quick_sort(left)
+        right = self.quick_sort(right)
+        return left + [pivot_element] + right
 
 
 input = [8, 2, 4, 9, 3, 6]
 print(input)
 s = Sort()
 # s.insertion_sort(input)
-output = s.merge_sort(input)
+# output = s.merge_sort(input)
+output = s.quick_sort(input)
 print(output)
