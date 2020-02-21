@@ -23,62 +23,82 @@ class Solution:
         return res
 
     """
-    https://leetcode.com/problems/subsets/
+    https://leetcode.com/problems/combination-sum/
     """
 
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         res = []
-        dict = {}
 
         def backtrack(list, target, tmp=[]):
-            if target == 0 and dict.get(
-                    tuple(sorted(tmp))
-            ) is None:
+            if target == 0:
                 res.append(tmp.copy())
-                dict[tuple(
-                    sorted(tmp)
-                )] = True
 
             if target < 0:
                 return
 
+            tmp = []
             for i in range(0, len(list)):
                 element = list[i]
                 tmp.append(element)
                 backtrack(list, target - element, tmp)
                 tmp.remove(element)
 
-        candidates.sort()
         backtrack(candidates, target)
         return res
+
+    """
+    https://leetcode.com/problems/permutations-ii/    
+    """
+
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        """
+        Approach: Backtracking, breaking the call if finding the same element
+        at previous position with the exception of handling the first starting position.
+        Selecting the candidate solution when start,end index are equal.
+
+        Using set to handle the duplicate response
+        """
+        result = set()
+
+        def helper(list, start, end):
+            if start == end:
+                result.add(tuple(list))
+                return
+
+            for i in range(start, end + 1):
+                if i != start and list[start] == list[i]:
+                    continue
+
+                list[start], list[i] = list[i], list[start]
+                helper(list, start + 1, end)
+                list[start], list[i] = list[i], list[start]
+
+        helper(nums, 0, len(nums) - 1)
+        return [list(_) for _ in result]
 
     """
     https://leetcode.com/problems/combination-sum-ii/
     """
 
-    # TODO:
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
-        dict = {}
+        result = set()
 
-        def backtrack(list, target, start, tmp=[]):
-
-            if target < 0:
+        def backtrack(list, target, start, end, tmp=[]):
+            if target == 0:
+                result.add(tuple(tmp))
                 return
 
-            if target == 0 and dict.get(tuple(sorted(tmp))) is None:
-                dict[tuple(sorted(tmp))] = True
+            if target < 0 or start > end:
+                return
 
-            for i in range(start, len(list)):
-                if i > start and list[i] == list[i - 1]:
-                    continue
-
+            for i in range(start, end):
                 element = list[i]
                 tmp.append(element)
-                backtrack(list, target - element, start + 1, tmp)
+                backtrack(list, target - element, i + 1, end, tmp)
                 del tmp[-1]
 
-        backtrack(sorted(candidates), target, 0)
-        return [list(_) for _ in dict.keys()]
+        backtrack(sorted(candidates), target, 0, len(candidates))
+        return [list(_) for _ in result]
 
     """
     https://leetcode.com/problems/subsets/
@@ -182,3 +202,5 @@ start_time = time.time()
 output = s.subsets_v3([1, 2, 3, 4, 5, 6, 7, 8, 10, 0])
 end_time = time.time()
 print(len(output), end_time - start_time, output)
+# print(s.combinationSum2([], 0))
+# print(s.permuteUnique([2, 2, 1, 1]))
