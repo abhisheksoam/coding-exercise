@@ -846,6 +846,7 @@ def flipEquiv(self, root1: TreeNode, root2: TreeNode) -> bool:
     """
     https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/
     """
+
     # TODO:
     def constructFromPrePost(self, pre: List[int], post: List[int]) -> TreeNode:
         pass
@@ -864,7 +865,30 @@ def flipEquiv(self, root1: TreeNode, root2: TreeNode) -> bool:
     """
 
     def connect(self, root: "Node") -> "Node":
-        pass
+        if not root:
+            return root
+
+        queue = [root, None]
+        while queue:
+            top = queue.pop(0)
+            if top is not None:
+                try:
+                    next = queue[0]
+                except:
+                    next = None
+                top.next = next
+
+                if top.left:
+                    queue.append(top.left)
+                if top.right:
+                    queue.append(top.right)
+            else:
+                if len(queue) != 0:
+                    queue.append(None)
+                else:
+                    break
+
+        return root
 
 
 t1 = TreeNode(8)
