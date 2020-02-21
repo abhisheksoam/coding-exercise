@@ -1,4 +1,32 @@
 # from .trees import TreeNode, Solution
+"""
+https://leetcode.com/problems/serialize-and-deserialize-binary-tree/
+"""
+
+
+# TODO:
+
+
+class Codec:
+    def serialize(self, root):
+        import pickle
+
+        """Encodes a tree to a single string.
+
+        :type root: TreeNode
+        :rtype: str
+        """
+        return pickle.dump(root)
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree.
+
+        :type data: str
+        :rtype: TreeNode
+        """
+        import pickle
+
+        return pickle.load(data)
 
 
 def stringToTreeNode(input):
@@ -819,36 +847,48 @@ def flipEquiv(self, root1: TreeNode, root2: TreeNode) -> bool:
     https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/
     """
 
+    # TODO:
     def constructFromPrePost(self, pre: List[int], post: List[int]) -> TreeNode:
         pass
 
+    """ 
+    https://leetcode.com/problems/populating-next-right-pointers-in-each-node/ 
+    """
+    """
+    # Definition for a Node.
+    class Node:
+        def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+            self.val = val
+            self.left = left
+            self.right = right
+            self.next = next
+    """
 
-"""
-https://leetcode.com/problems/serialize-and-deserialize-binary-tree/
-"""
-# TODO:
+    def connect(self, root: "Node") -> "Node":
+        if not root:
+            return root
 
+        queue = [root, None]
+        while queue:
+            top = queue.pop(0)
+            if top is not None:
+                try:
+                    next = queue[0]
+                except:
+                    next = None
+                top.next = next
 
-class Codec:
-    def serialize(self, root):
-        import pickle
+                if top.left:
+                    queue.append(top.left)
+                if top.right:
+                    queue.append(top.right)
+            else:
+                if len(queue) != 0:
+                    queue.append(None)
+                else:
+                    break
 
-        """Encodes a tree to a single string.
-        
-        :type root: TreeNode
-        :rtype: str
-        """
-        return pickle.dump(root)
-
-    def deserialize(self, data):
-        """Decodes your encoded data to tree.
-
-        :type data: str
-        :rtype: TreeNode
-        """
-        import pickle
-
-        return pickle.load(data)
+        return root
 
 
 t1 = TreeNode(8)

@@ -332,9 +332,43 @@ class Solution:
 
         return "".join(map(str, nums))
 
+    """
+    https://leetcode.com/problems/move-zeroes/
+    """
 
-S = Solution()
-print(S.largestNumber([0, 0]))
+    def moveZeroes(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        if len(nums) >= 2:
+            l = 0
+            n = 1
+            size = len(nums)
+
+            while n < size and l < size:
+                l_element = nums[l]
+                n_element = nums[n]
+                if l_element == 0 and n_element != 0:
+                    nums[l] = nums[n]
+                    nums[n] = 0
+                    l += 1
+                    n += 1
+                elif l_element == 0 and n_element == 0:
+                    n += 1
+                elif l_element != 0 and n_element == 0:
+                    l += 1
+                elif l_element != 0 and n_element != 0:
+                    l += 1
+                    n += 1
+
+
+s = Solution()
+input = [0, 1, 0, 3, 12]
+s.moveZeroes(input)
+print(input)
+
+# S = Solution()
+# print(S.largestNumber([0, 0]))
 # data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 # print(S.spiralOrder(data))
 # print(S.strStr("needlle", "ll"))
