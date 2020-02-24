@@ -163,6 +163,22 @@ class Solution:
                 i += 1
         return min_substring
 
+    """
+    https://leetcode.com/problems/reverse-string/
+    """
+
+    def reverseString(self, s: List[str]) -> None:
+        """
+        Do not return anything, modify s in-place instead.
+
+        """
+        l, r = 0, len(s)
+        while l < r:
+            s[l], s[r] = s[r], s[l]
+            l += 1
+            r -= 1
+
 
 s = Solution()
-print(s.minWindow("bba", "ab"))
+# print(s.minWindow("bba", "ab"))
+print(s.reverseString(["h", "e", "l", "l", "o"]))

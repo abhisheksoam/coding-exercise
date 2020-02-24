@@ -99,8 +99,69 @@ class Solution:
         backtrack(sorted(candidates), target, 0, len(candidates))
         return [list(_) for _ in result]
 
+    """
+    https://leetcode.com/problems/palindrome-partitioning/
+    """
+
+    # TODO:
+    def partition(self, s: str) -> List[List[str]]:
+        pass
+
+    """
+    https://leetcode.com/problems/generate-parentheses/
+    """
+
+    def generateParenthesis(self, n: int) -> List[str]:
+        result = {}
+        has_occured = {}
+
+        def backtrack(n, level, tmp=""):
+            if has_occured.get(tmp) is not None:
+                return
+
+            has_occured[tmp] = 1
+            if n == level:
+                result[tmp] = 1
+                return
+
+            size = len(tmp)
+            gaps = size + 1
+            for i in range(0, gaps - 1):
+                # Append the parenthesis in the string and increment the level counter
+                previous = tmp
+                tmp = tmp[0:i] + "()" + tmp[i:]
+                backtrack(n, level + 1, tmp)
+                tmp = previous
+
+        if n == 1:
+            return ["()"]
+        elif n > 1:
+            backtrack(n, 1, "()")
+            return [key for key in result.keys()]
+        else:
+            return []
+
+    """
+    https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+    """
+
+    # TODO:
+    def letterCombinations(self, digits: str) -> List[str]:
+        processing = {
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "pqrs",
+            "8": "tuv",
+            "9": "wxyz",
+        }
+
 
 s = Solution()
+output = s.generateParenthesis(3)
+print(output, len(output))
 # print(s.permute([1, 0, 2]))
 # print(s.combinationSum([2, 3, 5], 8))
 # print(s.combinationSum2([], 0))

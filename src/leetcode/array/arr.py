@@ -361,11 +361,30 @@ class Solution:
                     l += 1
                     n += 1
 
+    """
+    https://leetcode.com/problems/increasing-triplet-subsequence/
+    """
+
+    def increasingTriplet(self, nums: List[int]) -> bool:
+        smallest = float("inf")
+        second_smallest = float("inf")
+
+        for element in nums:
+            if element < smallest:
+                smallest = element
+            elif element < second_smallest and element > smallest:
+                second_smallest = element
+            elif element > second_smallest:
+                return True
+
+        return False
+
 
 s = Solution()
-input = [0, 1, 0, 3, 12]
-s.moveZeroes(input)
-print(input)
+print(s.increasingTriplet([1, 1, 1, 1, 1]))
+# input = [0, 1, 0, 3, 12]
+# s.moveZeroes(input)
+# print(input)
 
 # S = Solution()
 # print(S.largestNumber([0, 0]))

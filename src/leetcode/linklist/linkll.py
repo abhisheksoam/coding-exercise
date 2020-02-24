@@ -36,3 +36,19 @@ class Solution:
     https://leetcode.com/problems/palindrome-linked-list/
     """
     # TODO:
+
+    """
+    https://leetcode.com/problems/reverse-linked-list/
+    """
+    # TODO:
+    def reverseList(self, head: ListNode) -> ListNode:
+        def helper_recursive(head, prev):
+            if head is None:
+                return prev
+
+            prev = head
+            next = helper_recursive(head.next, prev)
+            prev.next = next
+            return next
+
+        return helper_recursive(head, None)
