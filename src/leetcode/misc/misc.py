@@ -219,77 +219,20 @@ class Solution:
 
         return previous
 
+    """
+    https://leetcode.com/problems/bulb-switcher/
+    """
+
+    def bulbSwitch(self, n: int) -> int:
+        import math
+
+        return math.sqrt(n)
+
 
 s = Solution()
-print(
-    s.countSmaller(
-        [
-            26,
-            78,
-            27,
-            100,
-            33,
-            67,
-            90,
-            23,
-            66,
-            5,
-            38,
-            7,
-            35,
-            23,
-            52,
-            22,
-            83,
-            51,
-            98,
-            69,
-            81,
-            32,
-            78,
-            28,
-            94,
-            13,
-            2,
-            97,
-            3,
-            76,
-            99,
-            51,
-            9,
-            21,
-            84,
-            66,
-            65,
-            36,
-            100,
-            41,
-        ]
-    )
-)
+import time
 
-
-class MedianFinder:
-    def __init__(self):
-        self.median = None
-        self.list = []
-
-    def _calculate_median(self):
-        pass
-
-    def addNum(self, num: int) -> None:
-        self.list.append()
-
-    def findMedian(self) -> float:
-        pass
-
-
-# node = ListNode(1)
-# node.next = ListNode(2)
-# node.next.next = ListNode(3)
-# node.next.next.next = ListNode(4)
-# node.next.next.next.next = ListNode(5)
-
-# s.print_ll(node)
-# print('\n')
-# s.print_ll(s.removeNthFromEnd(node, 1))
+st = time.time()
+print(s.bulbSwitch(99999))
+et = time.time()
+print(et - st)

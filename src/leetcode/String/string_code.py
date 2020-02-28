@@ -178,6 +178,14 @@ class Solution:
             l += 1
             r -= 1
 
+    """
+    https://leetcode.com/problems/word-search/
+    """
+
+    # TODO:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        pass
+
 
 s = Solution()
 # print(s.minWindow("bba", "ab"))
