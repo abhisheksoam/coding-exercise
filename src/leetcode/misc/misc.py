@@ -229,10 +229,27 @@ class Solution:
         return math.sqrt(n)
 
 
-s = Solution()
-import time
+"""
+https://leetcode.com/problems/find-median-from-data-stream/
+"""
 
-st = time.time()
-print(s.bulbSwitch(99999))
-et = time.time()
-print(et - st)
+
+class MedianFinder:
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.list = list()
+
+    def merge_list(self):
+        pass
+
+    def addNum(self, num: int) -> None:
+        # Add a number to array and merge it with the list
+        pass
+
+    def findMedian(self) -> float:
+        pass
+
+
+s = Solution()

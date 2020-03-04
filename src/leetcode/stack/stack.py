@@ -1,20 +1,30 @@
 class Solution:
+    """
+    https://leetcode.com/problems/valid-parentheses/
+    """
+
     def isValid(self, s: str) -> bool:
         stack = []
+
         for char in s:
-            stack.append(char)
+            try:
+                top = stack[-1]
+            except Exception as error:
+                stack.append(char)
+                continue
 
-        previous = None
-        while stack:
-            current = stack.pop()
-            if previous:
-                if previous != ")" and current != "(":
-                    return False
-                elif previous != "}" and current != "{":
-                    return False
-                elif previous != "]" and current != "[":
-                    return False
+            if char == ")" and top == "(" or char == "(" and char == ")":
+                stack.pop()
 
-            previous = current
+            elif char == "}" and top == "{" or char == "{" and char == "}":
+                stack.pop()
+            elif char == "]" and top == "[" or char == "[" and char == "]":
+                stack.pop()
+
+            else:
+                stack.append(char)
+
+        if stack:
+            return False
 
         return True
