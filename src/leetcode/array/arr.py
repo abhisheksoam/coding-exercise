@@ -468,11 +468,81 @@ class Solution:
     """
     https://leetcode.com/problems/longest-consecutive-sequence/
     """
+
     # TODO:
 
     def longestConsecutive(self, nums: List[int]) -> int:
         pass
 
+    """
+    https://leetcode.com/problems/trapping-rain-water/
+    """
 
-s = Solution()
-print(s.singleNumber([2, 2, 1]))
+    # TODO:
+    def trap(self, height: List[int]) -> int:
+        pass
+
+    """
+    https://leetcode.com/problems/first-missing-positive/
+    """
+
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        process = set(nums)
+
+        smallest_int = 1
+        while True:
+            if smallest_int not in process:
+                return smallest_int
+            smallest_int += 1
+
+    """
+    https://leetcode.com/problems/k-closest-points-to-origin/
+    """
+    # TODO:
+    def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
+        import math
+        import heapq
+
+        def euclidean_distance(point):
+            return math.sqrt(math.pow(point[0], 2) + math.pow(point[1], 2))
+
+        processing_dict = {}
+        output = []
+        for point in points:
+            distance = euclidean_distance(point)
+            processing_dict[distance] = point
+            heapq.heappush(output, distance)
+
+        # return [value for element in heapq.nsmallest(K, output)]
+
+
+"""
+https://leetcode.com/problems/shuffle-an-array/
+"""
+
+
+# TODO:
+class Solution:
+    def __init__(self, nums: List[int]):
+        self.nums = nums
+        self.shuffling = self.nums
+
+    def reset(self) -> List[int]:
+        """
+        Resets the array to its original configuration and return it.
+        """
+        self.shuffling = self.nums
+        return self.shuffling
+
+    def shuffle(self) -> List[int]:
+        """
+        Returns a random shuffling of the array.
+        """
+        if len(self.shuffling) > 2:
+            self.shuffling[0], self.shuffling[-1] = (
+                self.shuffling[-1],
+                self.shuffling[0],
+            )
+            return self.shuffling
+        else:
+            return self.nums

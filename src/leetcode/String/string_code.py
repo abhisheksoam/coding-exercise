@@ -186,7 +186,24 @@ class Solution:
     def exist(self, board: List[List[str]], word: str) -> bool:
         pass
 
+    """
+    https://leetcode.com/problems/most-common-word/
+    """
+    # TODO:
+    def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
+        words = paragraph.split(" ")
+        hashmap = {}
+        for ban in banned:
+            hashmap[ban.lower()] = True
+
+        process = {}
+        for word in words:
+            pass
+
 
 s = Solution()
 # print(s.minWindow("bba", "ab"))
-print(s.reverseString(["h", "e", "l", "l", "o"]))
+# print(s.reverseString(["h", "e", "l", "l", "o"]))
+paragraph = "Bob hit a ball, the hit BALL flew far after it was hit."
+banned = ["hit"]
+s.mostCommonWord(paragraph, banned)

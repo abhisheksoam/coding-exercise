@@ -234,22 +234,62 @@ https://leetcode.com/problems/find-median-from-data-stream/
 """
 
 
+# TODO:
+import heapq
+
+
 class MedianFinder:
     def __init__(self):
         """
         initialize your data structure here.
         """
-        self.list = list()
+        # self.list = list()
+        self.heap = []
 
-    def merge_list(self):
-        pass
+    # def merge_list(self, input):
+    #     output = []
+    #     i, j = 0, 0
+    #     size = len(self.list)
+    #     size1 = len(input)
+    #     while i < size and j < size1:
+    #
+    #         if self.list[i] < input[j]:
+    #             output.append(self.list[i])
+    #             i += 1
+    #         else:
+    #             output.append(input[j])
+    #             j += 1
+    #
+    #     while i < size:
+    #         output.append(self.list[i])
+    #         i += 1
+    #
+    #     while j < size1:
+    #         output.append(input[j])
+    #         j += 1
+    #
+    #     self.list = output
 
     def addNum(self, num: int) -> None:
         # Add a number to array and merge it with the list
-        pass
+        heapq.heappush(self.heap, num)
 
     def findMedian(self) -> float:
-        pass
+        arr = heapq.nsmallest(len(self.heap), self.heap)
+        size = len(arr)
+        if size % 2 == 0:
+            median_index = size // 2
+            return (arr[median_index] + arr[median_index - 1]) / 2
 
+        else:
+            return arr[(size // 2)]
+
+
+m = MedianFinder()
+m.addNum(1)
+m.addNum(2)
+print(m.findMedian())
+m.addNum(3)
+print(m.findMedian())
 
 s = Solution()
