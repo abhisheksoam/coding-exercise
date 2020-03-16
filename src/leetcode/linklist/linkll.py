@@ -52,3 +52,13 @@ class Solution:
             return next
 
         return helper_recursive(head, None)
+
+    """
+    https://leetcode.com/problems/delete-node-in-a-linked-list/
+    """
+    # TODO:
+    def deleteNode(self, node):
+        """
+        :type node: ListNode
+        :rtype: void Do not return anything, modify node in-place instead.
+        """
