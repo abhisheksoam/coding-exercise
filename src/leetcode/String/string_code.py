@@ -163,6 +163,63 @@ class Solution:
                 i += 1
         return min_substring
 
+    """
+    https://leetcode.com/problems/reverse-string/
+    """
+
+    def reverseString(self, s: List[str]) -> None:
+        """
+        Do not return anything, modify s in-place instead.
+
+        """
+        l, r = 0, len(s)
+        while l < r:
+            s[l], s[r] = s[r], s[l]
+            l += 1
+            r -= 1
+
+    """
+    https://leetcode.com/problems/word-search/
+    """
+
+    # TODO:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        pass
+
+    """
+    https://leetcode.com/problems/most-common-word/
+    """
+
+    def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
+        import string
+
+        translator = str.maketrans(string.punctuation, ' '*len(string.punctuation))
+        paragraph = paragraph.translate(translator)
+
+        words = paragraph.split(" ")
+
+        hashmap = {}
+        for ban in banned:
+            hashmap[ban.lower()] = True
+
+        process = {}
+        for word in words:
+            if not hashmap.get(word.lower()) and not word == "":
+                wd = word.lower()
+                process[wd] = process.get(wd, 0) + 1
+
+        min = 0
+        most_common = ""
+        for key, value in process.items():
+            if value > min:
+                min = value
+                most_common = key
+
+        return most_common
+
 
 s = Solution()
-print(s.minWindow("bba", "ab"))
+# print(s.reverseString(["h", "e", "l", "l", "o"]))
+paragraph = "a, a, a, a, b,b,b,c, c"
+banned = ["a"]
+print(s.mostCommonWord(paragraph, banned))

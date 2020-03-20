@@ -57,7 +57,6 @@ class Solution:
         for i in range(2, len(output)):
             output[i] = output[i - 1] + output[i - 2]
 
-        print(output)
         return output
 
     # def longestUnivaluePath(self, root: TreeNode) -> int:
@@ -81,14 +80,36 @@ class Solution:
     #
     #     return helper(root)
 
-    def minCostClimbingStairs(self, cost: List[int]) -> int:
-        cost = 0
-        for i in range(0, len(cost)):
-            pass
+    """
+       https://leetcode.com/problems/expression-add-operators/
+    """
+
+    # TODO:
+    def addOperators(self, num: str, target: int) -> List[str]:
+        operator = ["+", "*", "-"]
+        res = []
+
+        def helper(num, target, proc=""):
+            if len(num) <= 1:
+
+                if eval(proc + num) == target:
+                    res.append(proc + num)
+
+                return
+
+            for j in operator:
+                if int(num[0]) > 0:
+                    pro = num[0] + j
+                    helper(num[1:], target, proc + pro)
+
+        helper(num, target)
+        return res
 
 
 s = Solution()
-s.fibonacci(15)
+output = s.addOperators("105", 5)
+print(output)
+# s.fibonacci(15)
 # print(s.climbStairs(n=4))
 # print(s.tribonacci(25))
 # root = TreeNode(1)

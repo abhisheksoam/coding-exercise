@@ -219,77 +219,77 @@ class Solution:
 
         return previous
 
+    """
+    https://leetcode.com/problems/bulb-switcher/
+    """
 
-s = Solution()
-print(
-    s.countSmaller(
-        [
-            26,
-            78,
-            27,
-            100,
-            33,
-            67,
-            90,
-            23,
-            66,
-            5,
-            38,
-            7,
-            35,
-            23,
-            52,
-            22,
-            83,
-            51,
-            98,
-            69,
-            81,
-            32,
-            78,
-            28,
-            94,
-            13,
-            2,
-            97,
-            3,
-            76,
-            99,
-            51,
-            9,
-            21,
-            84,
-            66,
-            65,
-            36,
-            100,
-            41,
-        ]
-    )
-)
+    def bulbSwitch(self, n: int) -> int:
+        import math
+
+        return math.sqrt(n)
+
+
+"""
+https://leetcode.com/problems/find-median-from-data-stream/
+"""
+
+
+# TODO:
+import heapq
 
 
 class MedianFinder:
     def __init__(self):
-        self.median = None
-        self.list = []
+        """
+        initialize your data structure here.
+        """
+        # self.list = list()
+        self.heap = []
 
-    def _calculate_median(self):
-        pass
+    # def merge_list(self, input):
+    #     output = []
+    #     i, j = 0, 0
+    #     size = len(self.list)
+    #     size1 = len(input)
+    #     while i < size and j < size1:
+    #
+    #         if self.list[i] < input[j]:
+    #             output.append(self.list[i])
+    #             i += 1
+    #         else:
+    #             output.append(input[j])
+    #             j += 1
+    #
+    #     while i < size:
+    #         output.append(self.list[i])
+    #         i += 1
+    #
+    #     while j < size1:
+    #         output.append(input[j])
+    #         j += 1
+    #
+    #     self.list = output
 
     def addNum(self, num: int) -> None:
-        self.list.append()
+        # Add a number to array and merge it with the list
+        heapq.heappush(self.heap, num)
 
     def findMedian(self) -> float:
-        pass
+        arr = heapq.nsmallest(len(self.heap), self.heap)
+        size = len(arr)
+        if size % 2 == 0:
+            median_index = size // 2
+            return (arr[median_index] + arr[median_index - 1]) / 2
+
+        else:
+            return arr[(size // 2)]
 
 
-# node = ListNode(1)
-# node.next = ListNode(2)
-# node.next.next = ListNode(3)
-# node.next.next.next = ListNode(4)
-# node.next.next.next.next = ListNode(5)
+m = MedianFinder()
+m.addNum(1)
+m.addNum(2)
+print(m.findMedian())
+m.addNum(3)
+print(m.findMedian())
 
-# s.print_ll(node)
-# print('\n')
-# s.print_ll(s.removeNthFromEnd(node, 1))
+s = Solution()

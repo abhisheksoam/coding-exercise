@@ -54,10 +54,5 @@ class Solution:
 
         return helper(head)
 
-s = Solution()
-node = ListNode(4)
-node.next = ListNode(5)
-node.next.next = ListNode(1)
-node.next.next.next = ListNode(9)
 
-s.deleteNode(node=ListNode(5))
+

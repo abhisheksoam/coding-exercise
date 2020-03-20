@@ -25,7 +25,7 @@ class Solution:
 
     # TODO:
     def fourSumCount(
-        self, A: List[int], B: List[int], C: List[int], D: List[int]
+            self, A: List[int], B: List[int], C: List[int], D: List[int]
     ) -> int:
         pass
 
@@ -182,21 +182,48 @@ class Solution:
 
     # TODO:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        directions = ["R", "D", "L", "T"]
+        direction_index = 0
+        current_coordinate = [0, 0]
+
+        def valid_index(current_coordinate):
+            index1 = current_coordinate[0]
+            index2 = current_coordinate[1]
+
+            try:
+                v = matrix[index1][index2]
+            except:
+                return False
+
+            return True
+
         def move_next(direction, current_cordinate):
             if direction == "R":
                 current_cordinate[1] += 1
+                if not valid_index(current_coordinate):
+                    current_coordinate[0] += 1
+                    current_coordinate[1] -= 1
+                    direction_index = 1
+
             elif direction == "D":
                 current_cordinate[0] += 1
+                if not valid_index(current_coordinate):
+                    current_coordinate[0] -= 1
+                    current_coordinate[1] -= 1
+                    direction_index = 2
+
             elif direction == "L":
                 current_cordinate[1] -= 1
+                if not valid_index(current_coordinate):
+                    current_coordinate[0] -= 1
+                    current_coordinate[1] -= 1
+                    direction_index = 3
+
             elif direction == "T":
                 current_cordinate[0] -= 1
 
             return current_cordinate
 
-        directions = ["R", "D", "L", "T"]
-        direction_index = 0
-        current_cordinate = [0, 0]
         size_of_matrix = len(matrix) * len(matrix[0])
         res = []
         while True:
@@ -245,10 +272,6 @@ class Solution:
         for value in left_arrary:
             nums[index] = value
             index += 1
-
-    """
-    https://leetcode.com/problems/spiral-matrix/
-    """
 
     """
     https://leetcode.com/problems/implement-strstr/
@@ -361,14 +384,206 @@ class Solution:
                     l += 1
                     n += 1
 
+    """
+    https://leetcode.com/problems/increasing-triplet-subsequence/
+    """
+
+    def increasingTriplet(self, nums: List[int]) -> bool:
+        smallest = float("inf")
+        second_smallest = float("inf")
+
+        for element in nums:
+            if element < smallest:
+                smallest = element
+            elif element < second_smallest and element > smallest:
+                second_smallest = element
+            elif element > second_smallest:
+                return True
+
+        return False
+
+    """
+    https://leetcode.com/problems/search-a-2d-matrix-ii/
+    """
+
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+
+        def binary_search(input, l, r, target):
+            if l > r:
+                return False
+
+            mid = l + (r - l) // 2
+            if input[mid] == target:
+                return True
+            elif input[mid] > target:
+                return binary_search(input, 0, mid - 1, target)
+            else:
+                return binary_search(input, mid + 1, r, target)
+
+        for i in range(0, len(matrix)):
+            output = binary_search(matrix[i], 0, len(matrix[i]) - 1, target)
+            if output:
+                return True
+
+        return False
+
+    """
+    https://leetcode.com/problems/number-of-islands/
+    """
+
+    # TODO
+    def numIslands(self, grid: List[List[str]]) -> int:
+        pass
+
+    """
+    https://leetcode.com/problems/single-number/
+    """
+
+    def singleNumber(self, nums: List[int]) -> int:
+        nums.sort()
+        previous = None
+        previous_count = 0
+        for element in nums:
+            if previous is None:
+                previous = element
+                previous_count = 1
+                continue
+
+            if element != previous:
+                if previous_count == 1:
+                    return previous
+
+                previous = element
+                previous_count = 1
+            elif element == previous:
+                previous_count += 1
+
+        return previous
+
+    """
+    https://leetcode.com/problems/longest-consecutive-sequence/
+    """
+
+    # TODO:
+
+    def longestConsecutive(self, nums: List[int]) -> int:
+        pass
+
+    """
+    https://leetcode.com/problems/trapping-rain-water/
+    """
+
+    # TODO:
+    def trap(self, height: List[int]) -> int:
+        pass
+
+    """
+    https://leetcode.com/problems/first-missing-positive/
+    """
+
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        process = set(nums)
+
+        smallest_int = 1
+        while True:
+            if smallest_int not in process:
+                return smallest_int
+            smallest_int += 1
+
+    """
+    https://leetcode.com/problems/k-closest-points-to-origin/
+    """
+
+    # TODO:
+    def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
+        import math
+        import heapq
+
+        def euclidean_distance(point):
+            return math.sqrt(math.pow(point[0], 2) + math.pow(point[1], 2))
+
+        processing_dict = {}
+        output = []
+        for point in points:
+            distance = euclidean_distance(point)
+            processing_dict[distance] = point
+            heapq.heappush(output, distance)
+
+        # return [value for element in heapq.nsmallest(K, output)]
+
+    """
+    https://leetcode.com/problems/sum-of-subarray-minimums/
+    """
+
+    # TODO:
+    def sumSubarrayMins(self, A: List[int]) -> int:
+
+        size = len(A)
+        modulo = 1000000007
+
+        min_el = min(A)
+        for i in range(0, size):
+            if A[i] == min_el:
+                min_index = i
+                break
+
+        sum, i = 0, 0
+        while i < size:
+            j = i
+            minimum_element = A[i]
+            while j < size:
+                if j >= min_index >= i:
+                    times = size - min_index
+                    sum += (min_el * times) % modulo
+                    break
+                else:
+                    element = A[j]
+                    if element < minimum_element:
+                        minimum_element = element
+                    sum = (sum + minimum_element) % modulo
+
+                j = j + 1
+
+            i = i + 1
+
+        return sum
+
 
 s = Solution()
-input = [0, 1, 0, 3, 12]
-s.moveZeroes(input)
-print(input)
+print(s.sumSubarrayMins([85]))
 
-# S = Solution()
-# print(S.largestNumber([0, 0]))
-# data = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-# print(S.spiralOrder(data))
-# print(S.strStr("needlle", "ll"))
+"""
+https://leetcode.com/problems/shuffle-an-array/
+"""
+
+
+# TODO:
+class Solution:
+    def __init__(self, nums: List[int]):
+        self.nums = nums
+        self.shuffling = self.nums
+
+    def reset(self) -> List[int]:
+        """
+        Resets the array to its original configuration and return it.
+        """
+        self.shuffling = self.nums
+        return self.shuffling
+
+    def shuffle(self) -> List[int]:
+        """
+        Returns a random shuffling of the array.
+        """
+        if len(self.shuffling) > 2:
+            self.shuffling[0], self.shuffling[-1] = (
+                self.shuffling[-1],
+                self.shuffling[0],
+            )
+            return self.shuffling
+        else:
+            return self.nums
