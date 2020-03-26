@@ -121,7 +121,7 @@ class Solution:
                 return
 
             for i in range(0, len(nums)):
-                new_array = nums[0:i] + nums[i + 1:]
+                new_array = nums[0:i] + nums[i + 1 :]
                 if new_array:
                     backtrack(new_array)
 
@@ -145,7 +145,7 @@ class Solution:
                 return
 
             for i in range(0, len(nums)):
-                new_array = nums[0:i] + nums[i + 1:]
+                new_array = nums[0:i] + nums[i + 1 :]
                 if new_array:
                     backtrack(new_array)
 

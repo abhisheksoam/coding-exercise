@@ -4,7 +4,7 @@ https://leetcode.com/problems/copy-list-with-random-pointer/
 
 
 class Node:
-    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+    def __init__(self, x: int, next: "Node" = None, random: "Node" = None):
         self.val = int(x)
         self.next = next
         self.random = random
@@ -12,7 +12,7 @@ class Node:
 
 # TODO:
 class Solution:
-    def copyRandomList(self, head: 'Node') -> 'Node':
+    def copyRandomList(self, head: "Node") -> "Node":
         def deep_copy(node, prev):
             if not node:
                 return None
@@ -28,7 +28,6 @@ class Solution:
         new_head = deep_copy(head, None)
 
         return new_head
-
 
 
 s = Solution()

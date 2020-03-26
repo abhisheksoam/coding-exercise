@@ -228,12 +228,18 @@ class Solution:
 
         return math.sqrt(n)
 
+    """
+    https://leetcode.com/problems/reverse-bits/
+    """
+
+    # TODO:
+    def reverseBits(self, n: int) -> int:
+        pass
+
 
 """
 https://leetcode.com/problems/find-median-from-data-stream/
 """
-
-
 # TODO:
 import heapq
 
@@ -285,11 +291,18 @@ class MedianFinder:
             return arr[(size // 2)]
 
 
-m = MedianFinder()
-m.addNum(1)
-m.addNum(2)
-print(m.findMedian())
-m.addNum(3)
-print(m.findMedian())
+"""
+https://leetcode.com/problems/lru-cache/
+"""
 
-s = Solution()
+
+# TODO:
+class LRUCache:
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+
+    def get(self, key: int) -> int:
+        pass
+
+    def put(self, key: int, value: int) -> None:
+        pass

@@ -444,7 +444,7 @@ class Solution:
                 try:
                     print(res[index])
                     res[index][0] = (res[index][0] * res[index][1] + current.val) / (
-                            res[index][1] + 1
+                        res[index][1] + 1
                     )
                     res[index][1] = res[index][1] + 1
                 except:
@@ -827,7 +827,7 @@ class Solution:
         mid = len(nums) // 2
         node = TreeNode(nums[mid])
         node.left = self.sortedArrayToBST(nums[:mid])
-        node.right = self.sortedArrayToBST(nums[mid + 1:])
+        node.right = self.sortedArrayToBST(nums[mid + 1 :])
         return node
 
     """
@@ -883,7 +883,6 @@ class Solution:
 
     # TODO:
     def tree2str(self, t: TreeNode) -> str:
-
         def helper(node, value=""):
             if not node:
                 return ""

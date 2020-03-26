@@ -93,6 +93,44 @@ class Solution:
 
         return helper(n)
 
+    """
+    https://leetcode.com/problems/count-primes/
+    Approach: 
+    """
+
+    def countPrimes(self, n: int) -> int:
+        output = set()
+
+        for i in range(2, int(n ** 0.5) + 1):
+            integer = i
+            counter = 2
+            value = counter * integer
+            while value <= n:
+                output.add(value)
+                counter = counter + 1
+                value = counter * integer
+
+        count = 0
+
+        for i in range(2, n):
+            if i not in output:
+                count = count + 1
+
+        return count
+
+    """
+    https://leetcode.com/problems/factorial-trailing-zeroes/
+    """
+
+    def trailingZeroes(self, n: int) -> int:
+        zero_count = 0
+        while n / 5 >= 5:
+            zero_count = zero_count + n // 5
+            n = n // 5
+
+        return zero_count
+
 
 s = Solution()
-print(s.divide(-2147483648, -1))
+# print(s.divide(-2147483648, -1))
+print(s.countPrimes(10))

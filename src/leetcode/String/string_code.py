@@ -188,12 +188,16 @@ class Solution:
 
     """
     https://leetcode.com/problems/most-common-word/
+    # paragraph = "a, a, a, a, b,b,b,c, c"
+    # banned = ["a"]
+    # print(s.mostCommonWord(paragraph, banned))
+
     """
 
     def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
         import string
 
-        translator = str.maketrans(string.punctuation, ' '*len(string.punctuation))
+        translator = str.maketrans(string.punctuation, " " * len(string.punctuation))
         paragraph = paragraph.translate(translator)
 
         words = paragraph.split(" ")
@@ -217,9 +221,36 @@ class Solution:
 
         return most_common
 
+    """
+    https://leetcode.com/problems/valid-palindrome/
+    """
+
+    def isPalindrome(self, s: str) -> bool:
+        l, r = 0, len(s) - 1
+        import string
+
+        lowercase = set(string.ascii_lowercase + string.digits)
+        while l < r:
+            l_char = s[l].lower()
+            r_char = s[r].lower()
+            if l_char in lowercase and r_char in lowercase:
+                if l_char != r_char:
+                    return False
+
+                l = l + 1
+                r = r - 1
+
+            elif l_char in lowercase and r_char not in lowercase:
+                r = r - 1
+            elif l_char not in lowercase and r_char in lowercase:
+                l = l + 1
+            else:
+                l = l + 1
+                r = r - 1
+
+        return True
+
 
 s = Solution()
-# print(s.reverseString(["h", "e", "l", "l", "o"]))
-paragraph = "a, a, a, a, b,b,b,c, c"
-banned = ["a"]
-print(s.mostCommonWord(paragraph, banned))
+output = s.isPalindrome("0P")
+print(output)

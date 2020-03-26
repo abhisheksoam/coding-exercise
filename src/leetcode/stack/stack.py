@@ -36,7 +36,6 @@ https://leetcode.com/problems/min-stack/
 
 
 class MinStack:
-
     def __init__(self):
         """
         initialize your data structure here.
@@ -66,13 +65,13 @@ class MinStack:
 """
 https://leetcode.com/problems/lru-cache/
 """
-
+# TODO
 class LRUCache:
-
     def __init__(self, capacity: int):
+        pass
 
     def get(self, key: int) -> int:
+        pass
 
     def put(self, key: int, value: int) -> None:
-
-
+        pass

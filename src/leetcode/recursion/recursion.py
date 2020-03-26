@@ -86,29 +86,43 @@ class Solution:
 
     # TODO:
     def addOperators(self, num: str, target: int) -> List[str]:
-        operator = ["+", "*", "-"]
+        operator = ["+", "*", "-", ""]
+        operands = operator[0:3]
         res = []
+
+        def evaluate_expression(input, target):
+            expression = ""
+            for char in input:
+                if expression and expression[-1] == "0" and char not in operands:
+                    expression = expression[:-1] + char
+                else:
+                    expression += char
+
+            if eval(expression) == target:
+                return True
+
+            return False
 
         def helper(num, target, proc=""):
             if len(num) <= 1:
-
-                if eval(proc + num) == target:
-                    res.append(proc + num)
-
+                expression = proc + num
+                if evaluate_expression(expression, target):
+                    res.append(expression)
                 return
 
             for j in operator:
-                if int(num[0]) > 0:
-                    pro = num[0] + j
-                    helper(num[1:], target, proc + pro)
+                pro = num[0] + j
+                helper(num[1:], target, proc + pro)
 
         helper(num, target)
         return res
 
 
 s = Solution()
-output = s.addOperators("105", 5)
+output = s.addOperators("00", 0)
 print(output)
+
+
 # s.fibonacci(15)
 # print(s.climbStairs(n=4))
 # print(s.tribonacci(25))
