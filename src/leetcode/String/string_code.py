@@ -119,49 +119,25 @@ class Solution:
 
     # TODO: Complete the problem
     def minWindow(self, s: str, t: str) -> str:
-        from collections import defaultdict
-
-        tmapped = defaultdict(dict)
-        for char in t:
-            tmapped[char] = True
-        t_size = len(t)
-        next_second_pointer = None
-        window_char_count = 0
-        character_matched = 0
-        min_window = float("inf")
-        min_substring = ""
-        substring = ""
-        i = 0
-        size = len(s)
-        while i < size:
-            char = s[i]
-            if char in tmapped:
-                substring = substring + char
-                window_char_count += 1
-                character_matched += 1
-
-                if character_matched == 2:
-                    next_second_pointer = i - 1
-
-                if character_matched == t_size:
-                    if window_char_count < min_window:
-                        min_substring = substring
-                    min_window = min(min_window, window_char_count)
-                    i = next_second_pointer
-                    next_second_pointer = None
-                    substring = ""
-                    character_matched = 0
-                    window_char_count = 0
-            else:
-                if character_matched is not 0:
-                    substring = substring + char
-                    window_char_count += 1
-
-            if i is None:
-                break
-            else:
-                i += 1
-        return min_substring
+        pass
+        # tmapped = {}
+        # for _ in t:
+        #     tmapped[_] = True
+        #
+        # s_size = len(s)
+        # t_size = len(t)
+        # left_pointer = 0
+        # right_pointer = 0
+        # charcter_matched = 0
+        # while left_pointer < s_size and right_pointer < s_size:
+        #     char = s[right_pointer]
+        #     if char in tmapped:
+        #         charcter_matched += 1
+        #
+        #         if t_size == charcter_matched:
+        #             pass
+        #         else:
+        #             left_pointer = left_pointer + 1
 
     """
     https://leetcode.com/problems/reverse-string/
@@ -250,7 +226,22 @@ class Solution:
 
         return True
 
+    """
+    https://leetcode.com/problems/to-lower-case/
+    """
+
+    def toLowerCase(self, str: str) -> str:
+        output = ""
+        for index, char in enumerate(str):
+            value = ord(char)
+            if value >= 97:
+                output = output + char
+            elif 65 <= value <= 90:
+                output = output + chr(value + 32)
+            else:
+                output = output + char
+        return output
+
 
 s = Solution()
-output = s.isPalindrome("0P")
-print(output)
+print(s.minWindow("ab", "A"))

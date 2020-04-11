@@ -1,8 +1,22 @@
 # Definition for singly-linked list.
 class ListNode:
-    def __init__(self, x):
+    def __init__(self, x, input_data=[]):
         self.val = x
         self.next = None
+        self.input_data = input_data
+
+    def create(self):
+        head = None
+        current = head
+        for value in self.input_data:
+            if head is None:
+                head = ListNode(value)
+                current = head
+
+            current.next = ListNode(value)
+            current = current.next
+
+        return head
 
 
 class Node:
@@ -40,6 +54,7 @@ class Solution:
     """
     https://leetcode.com/problems/reverse-linked-list/
     """
+
     # TODO:
     def reverseList(self, head: ListNode) -> ListNode:
         def helper(node):
@@ -56,6 +71,7 @@ class Solution:
     """
     https://leetcode.com/problems/delete-node-in-a-linked-list/
     """
+
     # TODO:
     def deleteNode(self, node):
         """

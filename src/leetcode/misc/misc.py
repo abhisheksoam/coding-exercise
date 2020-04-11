@@ -306,3 +306,104 @@ class LRUCache:
 
     def put(self, key: int, value: int) -> None:
         pass
+
+
+"""
+https://leetcode.com/problems/add-and-search-word-data-structure-design/
+"""
+
+
+# TODO:
+class TrieNode:
+    def __init__(self, character, word=False):
+        self.character = character
+        self.children = {}
+        self.word = word
+
+
+class WordDictionary:
+    def __init__(self):
+        """
+        Initialize your data structure here.
+       """
+        self.root = TrieNode("0", word=False)
+
+    def insert(self, word, root):
+        for index, char in enumerate(word):
+            children = root.children
+            if children.get(char):
+                root = root.children.get(char)
+            else:
+                node = TrieNode(char)
+                root.children[char] = node
+                root = node
+
+        root.word = True
+
+    def addWord(self, word: str) -> None:
+        """
+        Adds a word into the data structure.
+        """
+        self.insert(word, self.root)
+
+    def _search(self, word, root):
+        if not word:
+            if root.word:
+                return True
+            return False
+
+        char = word[0]
+        if char == ".":
+            for node in root.children.values():
+                return self._search(word[1:], node)
+        else:
+            node = root.children.get(char)
+            if not node:
+                return False
+            return self._search(word[1:], node)
+
+    def search(self, word: str) -> bool:
+        """
+        Returns if the word is in the data structure. A word could contain the dot character '.' to represent any one letter.
+        """
+        return self._search(word, self.root)
+
+
+# obj = WordDictionary()
+# obj.addWord("at")
+# obj.addWord("and")
+# obj.addWord("an")
+# obj.addWord("add")
+# obj.addWord("bat")
+# print(obj.search("a.d"))
+
+"""
+https://leetcode.com/problems/range-sum-query-2d-immutable/
+"""
+
+
+class NumMatrix:
+    def __init__(self, matrix: List[List[int]]):
+        self.matrix = matrix
+
+    def sumRegion(self, row1: int, col1: int, row2: int, col2: int) -> int:
+        sum = 0
+        for i in range(row1, row2 + 1):
+            for j in range(col1, col2 + 1):
+                sum = sum + self.matrix[i][j]
+
+        return sum
+
+
+# Your NumMatrix object will be instantiated and called as such:
+matrix = [
+    [3, 0, 1, 4, 2],
+    [5, 6, 3, 2, 1],
+    [1, 2, 0, 1, 5],
+    [4, 1, 0, 1, 7],
+    [1, 0, 3, 0, 5],
+]
+
+obj = NumMatrix(matrix)
+param_1 = obj.sumRegion(2, 1, 4, 3)
+print(param_1)
