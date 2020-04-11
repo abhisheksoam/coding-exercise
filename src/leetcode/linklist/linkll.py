@@ -78,3 +78,28 @@ class Solution:
         :type node: ListNode
         :rtype: void Do not return anything, modify node in-place instead.
         """
+
+    def middleNode(self, head: ListNode) -> ListNode:
+        slow = head
+        fast = head
+        while fast.next is not None:
+            for i in range(0, 2):
+                if fast.next is not None:
+                    fast = fast.next
+
+            if slow.next is not None:
+                slow = slow.next
+
+        return slow
+
+
+head = ListNode(1)
+head.next = ListNode(2)
+head.next.next = ListNode(3)
+head.next.next.next = ListNode(4)
+head.next.next.next.next = ListNode(5)
+head.next.next.next.next.next = ListNode(6)
+
+s = Solution()
+output = s.middleNode(head)
+print(output.val)

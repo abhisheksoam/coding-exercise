@@ -937,6 +937,9 @@ class Solution:
 
     """
     https://leetcode.com/problems/maximum-binary-tree/
+    input = [3, 2, 1, 6, 0, 5]
+    root = s.constructMaximumBinaryTree(input)
+    print(s.levelOrder(root))
     """
 
     def constructMaximumBinaryTree(self, nums: List[int]) -> TreeNode:
@@ -967,9 +970,25 @@ class Solution:
 
         return helper(nums)
 
+    """
+    Diameter of binary tree
+    
+    """
+
+    # TODO:
+    def diameterOfBinaryTree(self, root: TreeNode) -> int:
+        def helper(node):
+            if not node:
+                return 0
+
+            l_value = 1 + helper(node.left)
+            r_value = 1 + helper(node.right)
+            return l_value + r_value
+
+        return helper(root)
+
 
 s = Solution()
-
-input = [3, 2, 1, 6, 0, 5]
-root = s.constructMaximumBinaryTree(input)
-print(s.levelOrder(root))
+root = stringToTreeNode("[1,2,3,4,5]")
+output = s.diameterOfBinaryTree(root)
+print(output)

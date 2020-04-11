@@ -155,14 +155,6 @@ class Solution:
             r -= 1
 
     """
-    https://leetcode.com/problems/word-search/
-    """
-
-    # TODO:
-    def exist(self, board: List[List[str]], word: str) -> bool:
-        pass
-
-    """
     https://leetcode.com/problems/most-common-word/
     # paragraph = "a, a, a, a, b,b,b,c, c"
     # banned = ["a"]
@@ -241,6 +233,33 @@ class Solution:
             else:
                 output = output + char
         return output
+
+    """
+    Backspace Compare
+    """
+
+    def backspaceCompare(self, S: str, T: str) -> bool:
+        def get_char(word):
+            r = len(word) - 1
+            previous_backspace = 0
+            output = ""
+            while r >= 0:
+                char = word[r]
+                if char == "#":
+                    previous_backspace = previous_backspace + 1
+                else:
+                    if previous_backspace == 0:
+                        output = char + output
+                    else:
+                        previous_backspace = previous_backspace - 1
+
+                r = r - 1
+            return output
+
+        if get_char(S) == get_char(T):
+            return True
+
+        return False
 
 
 s = Solution()

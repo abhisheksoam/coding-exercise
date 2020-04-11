@@ -41,30 +41,39 @@ class MinStack:
         initialize your data structure here.
         """
         self.list = []
+        self.smallest = None
 
     def push(self, x: int) -> None:
         self.list.insert(0, x)
-        if x < self.min:
-            self.min = x
+        if self.smallest is None:
+            self.smallest = x
+
+        if x < self.smallest:
+            self.smallest = x
 
     def pop(self) -> None:
-        self.list.pop(0)
+        value = self.list.pop(0)
+        if value == self.smallest:
+            self._set_min()
+
+    def _set_min(self):
+        if self.list:
+            self.smallest = min(self.list)
+        else:
+            self.smallest = None
 
     def top(self) -> int:
         return self.list[0]
 
     def getMin(self) -> int:
-        min = float("inf")
-        for a in self.list:
-            if a < min:
-                min = a
-
-        return min
+        return self.smallest
 
 
 """
 https://leetcode.com/problems/lru-cache/
 """
+
+
 # TODO
 class LRUCache:
     def __init__(self, capacity: int):
