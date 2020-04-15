@@ -977,18 +977,64 @@ class Solution:
 
     # TODO:
     def diameterOfBinaryTree(self, root: TreeNode) -> int:
-        def helper(node):
+        def height(node):
             if not node:
                 return 0
 
-            l_value = 1 + helper(node.left)
-            r_value = 1 + helper(node.right)
-            return l_value + r_value
+            if node.left:
+                l = 1 + height(node.left)
+            else:
+                l = 0
+            if node.right:
+                r = 1 + height(node.right)
+            else:
+                r = 0
+            return max(l, r)
+
+        def helper(node, max=0):
+            if not node:
+                return 0
+
+            lheight = height(node.left)
+            rheight = height(node.right)
+            print(node.val)
+            print(lheight, rheight)
+            diameter = lheight + rheight + 1
+            if diameter > max:
+                max = diameter
+
+            helper(node.left, max)
+            helper(node.right, max)
+
+            return max
+
+        return helper(root)
+
+    """
+    https://leetcode.com/problems/trim-a-binary-search-tree/
+    :solution_seen True
+    """
+
+    def trimBST(self, root: TreeNode, L: int, R: int) -> TreeNode:
+        def helper(root):
+            if not root:
+                return None
+
+            elif root.val < L:
+                return helper(root.right)
+
+            elif root.val > R:
+                return helper(root.left)
+            else:
+                root.left = helper(root.left)
+                root.right = helper(root.right)
+                return root
 
         return helper(root)
 
 
 s = Solution()
-root = stringToTreeNode("[1,2,3,4,5]")
-output = s.diameterOfBinaryTree(root)
-print(output)
+root = stringToTreeNode("[3,0,4, null, 2, null, null, 1]")
+output = s.trimBST(root, 1, 3)
+print(output.val)
+print(output.right.val)

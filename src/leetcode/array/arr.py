@@ -90,6 +90,7 @@ class Solution:
     https://leetcode.com/problems/merge-intervals/
     """
 
+    # TODO:
     # # def merge(self, intervals: List[List[int]]) -> List[List[int]]:
     #
     #     # Failed approach
@@ -126,17 +127,27 @@ class Solution:
     #     return intervals
     #     """
 
-    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+    def merge_interval(self, intervals: List[List[int]]) -> List[List[int]]:
         merge = []
         for current_interval in sorted(intervals, key=lambda e: e[0]):
             if merge:
                 last_interval = merge[-1]
-                if current_interval[0] > last_interval[1]:
+                current_interval_start = current_interval[0]
+                current_interval_end = current_interval[1]
+
+                last_interval_start = last_interval[0]
+                last_interval_end = last_interval[1]
+
+                if current_interval_start > last_interval_end:
                     # They do not overlap
                     merge.append(current_interval)
                 else:
+                    merge.pop(-1)
                     merge.append(
-                        [last_interval[0], max(current_interval[1], last_interval[1])]
+                        [
+                            last_interval_start,
+                            max(current_interval_end, last_interval_end),
+                        ]
                     )
             else:
                 merge.append(current_interval)
@@ -762,36 +773,90 @@ class Solution:
 
         return output
 
+    """
+    Last Stone Weight
+    output = s.lastStoneWeight([7, 6, 7, 6, 9])
+    print(output)
+    """
+
+    def lastStoneWeight(self, stones: List[int]) -> int:
+        stones = sorted(stones)
+        while stones:
+            if len(stones) == 1:
+                break
+
+            _heavy_1 = stones.pop(len(stones) - 1)
+            _heavy_2 = stones.pop(len(stones) - 1)
+
+            if _heavy_1 == _heavy_2:
+                continue
+            else:
+                stone_weight = abs(_heavy_1 - _heavy_2)
+                if stones:
+                    for i in range(0, len(stones)):
+                        if stones[i] >= stone_weight:
+                            break
+
+                    stones.insert(i, stone_weight)
+                else:
+                    stones.append(stone_weight)
+        if stones:
+            return stones[0]
+
+        return 0
+
+    """
+    Find max length, Contigous array
+    """
+
+    # TODO
+    def findMaxLength(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+
+        _size = len(nums)
+        output = 0
+        i = 0
+        one_discovered = 0
+        zero_discovered = 0
+        while i < _size:
+            current_element = nums[i]
+
+            i += 1
+
+        return output
+
 
 s = Solution()
+out = s.findMaxLength([0, 0, 0, 1, 1, 1, 0])
+print(out)
 
 """
 https://leetcode.com/problems/shuffle-an-array/
 """
 
-
 # TODO:
-class Solution:
-    def __init__(self, nums: List[int]):
-        self.nums = nums
-        self.shuffling = self.nums
-
-    def reset(self) -> List[int]:
-        """
-        Resets the array to its original configuration and return it.
-        """
-        self.shuffling = self.nums
-        return self.shuffling
-
-    def shuffle(self) -> List[int]:
-        """
-        Returns a random shuffling of the array.
-        """
-        if len(self.shuffling) > 2:
-            self.shuffling[0], self.shuffling[-1] = (
-                self.shuffling[-1],
-                self.shuffling[0],
-            )
-            return self.shuffling
-        else:
-            return self.nums
+# class Solution:
+#     def __init__(self, nums: List[int]):
+#         self.nums = nums
+#         self.shuffling = self.nums
+#
+#     def reset(self) -> List[int]:
+#         """
+#         Resets the array to its original configuration and return it.
+#         """
+#         self.shuffling = self.nums
+#         return self.shuffling
+#
+#     def shuffle(self) -> List[int]:
+#         """
+#         Returns a random shuffling of the array.
+#         """
+#         if len(self.shuffling) > 2:
+#             self.shuffling[0], self.shuffling[-1] = (
+#                 self.shuffling[-1],
+#                 self.shuffling[0],
+#             )
+#             return self.shuffling
+#         else:
+#             return self.nums

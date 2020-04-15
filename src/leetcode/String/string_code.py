@@ -261,6 +261,67 @@ class Solution:
 
         return False
 
+    """
+    https://leetcode.com/problems/number-of-matching-subsequences/
+    """
+
+    # TODO:
+    def numMatchingSubseq(self, S: str, words: List[str]) -> int:
+        def is_subsequence(s, word):
+            s_pointer = 0
+            w_pointer = 0
+            s_size = len(s)
+            w_size = len(word)
+
+            while s_pointer < s_size and w_pointer < w_size:
+                s_char = s[s_pointer]
+                w_char = word[w_pointer]
+
+                if s_char == w_char:
+                    w_pointer += 1
+
+                s_pointer += 1
+
+            if w_pointer == w_size:
+                return True
+
+            return False
+
+        count = 0
+        process = {}
+        for word in words:
+            if process.get(word, False):
+                count += 1
+            else:
+                if is_subsequence(S, word):
+                    count += 1
+                    process[word] = True
+
+        return count
+
+    """
+    https://leetcode.com/problems/is-subsequence/
+    """
+
+    def isSubsequence(self, s: str, t: str) -> bool:
+        s, t = t, s
+        s_pointer = 0
+        t_pointer = 0
+        s_size = len(s)
+        t_size = len(t)
+        while s_pointer < s_size and t_pointer < t_size:
+            s_char = s[s_pointer]
+            t_char = t[t_pointer]
+            if s_char == t_char:
+                t_pointer += 1
+
+            s_pointer += 1
+
+        if t_pointer == t_size:
+            return True
+
+        return False
+
 
 s = Solution()
 print(s.minWindow("ab", "A"))
