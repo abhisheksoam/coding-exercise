@@ -90,7 +90,7 @@ class Solution:
     https://leetcode.com/problems/merge-intervals/
     """
 
-    # TODO:
+    #
     # # def merge(self, intervals: List[List[int]]) -> List[List[int]]:
     #
     #     # Failed approach
@@ -661,7 +661,6 @@ class Solution:
     
     """
 
-    # TODO:
     def plusOne(self, digits: List[int]) -> List[int]:
         number = "".join(map(str, digits))
         number = int(number)
@@ -826,10 +825,128 @@ class Solution:
 
         return output
 
+    """
+    https://leetcode.com/problems/squares-of-a-sorted-array/
+    :solution_seen False
+    :category easy
+    :time_complexity O(nlog(n))
+    :space_complexity O(n)
+    
+    # Optimised Approach
+    - Using pointer approach 
+    """
+
+    def sortedSquares(self, A: List[int]) -> List[int]:
+        _size = len(A)
+        for i in range(0, _size):
+            if A[i] < 0:
+                A[i] = -A[i]
+
+        a = sorted(A)
+        for i in range(0, _size):
+            a[i] = a[i] * a[i]
+
+        return a
+
+    """
+    Search in Rotated Sorted Array
+    """
+
+    # TODO:
+    def search(self, nums: List[int], target: int) -> int:
+        def find_index(input, l, r):
+            if l > r:
+                return -1
+            else:
+                mid = l + (r - l) // 2
+                right = mid + 1
+                left = mid - 1
+                if right < r:
+                    if input[mid] > input[right]:
+                        return mid
+                elif left > l:
+                    if input[mid] > input[right]:
+                        return mid
+                else:
+
+                    left = find_index(input, l, mid - 1)
+                    right = find_index(input, mid + 1, r)
+                    if left is not -1:
+                        return left
+
+                    elif right is not -1:
+                        return right
+                    else:
+                        return -1
+
+        def binary_search(input, target, l, r):
+            if l > r:
+                return -1
+            else:
+                m = l + (r - l) // 2
+
+                if input[m] == target:
+                    return m
+
+                elif target > input[m]:
+                    return binary_search(input, target, m + 1, r)
+                elif target < input[m]:
+                    return binary_search(input, target, l, m - 1)
+
+        index = find_index(nums, 0, len(nums) - 1)
+        if index != -1:
+            left = nums[0 : index + 1]
+            right = nums[index + 1 :]
+            left_search = binary_search(left, target, 0, len(left) - 1)
+            if left_search != -1:
+                return left_search
+
+            right_search = binary_search(right, target, 0, len(right) - 1)
+            if right_search != -1:
+                return index + right_search + 1
+
+            return -1
+
+        else:
+            return -1
+
+    """
+    https://leetcode.com/problems/sliding-window-maximum/
+    :solution_seen False
+    :space_complexity O(K)
+    :time_complexity O(N^2)
+    :category hard
+    
+    Optimised solution
+     
+    """
+
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        output = []
+        stack = nums[0:k]
+        _size = len(nums)
+        output.append(max(stack))
+        for i in range(k, _size):
+            element = nums[i]
+            stack.pop(0)
+            stack.append(element)
+            output.append(max(stack))
+
+        return output
+
+    # Version 2
+    def maxSlidingWindow_v2(self, nums: List[int], k: int) -> List[int]:
+        output = []
+        _size = len(nums)
+        output.append(max(nums[0:k]))
+        for i in range(k, _size):
+            output.append(max(nums[i], output[-1]))
+
+        return output
+
 
 s = Solution()
-out = s.findMaxLength([0, 0, 0, 1, 1, 1, 0])
-print(out)
+print(s.search([2, 1], 1))
 
 """
 https://leetcode.com/problems/shuffle-an-array/

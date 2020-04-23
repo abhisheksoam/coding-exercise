@@ -83,5 +83,47 @@ class Solution:
                         return True
         return False
 
+    """
+    https://leetcode.com/problems/as-far-from-land-as-possible/
+    """
+
+    # TODO:
+
+    def maxDistance(self, grid: List[List[int]]) -> int:
+        if not grid:
+            return -1
+
+        row = len(grid)
+        column = len(grid[0])
+        max_path = -1
+
+        def dfs(matrix, i, j, visited, path=0, output=[]):
+            if i < 0 or i >= row or j >= column or j < 0 or visited[i][j] == 1:
+                return path
+
+            if matrix[i][j] == 1:
+                return output.append(path)
+
+            visited[i][j] = 1
+            l1 = dfs(matrix, i + 1, j, visited, path + 1)
+            l2 = dfs(matrix, i - 1, j, visited, path + 1)
+            l3 = dfs(matrix, i, j + 1, visited, path + 1)
+            l4 = dfs(matrix, i, j - 1, visited, path + 1)
+            visited[i][j] = 0
+            return output
+
+        for r in range(0, row):
+            for c in range(0, column):
+                element = grid[r][c]
+                if element == 0:
+                    visited = [[0 for col in range(column)] for rr in range(row)]
+                    path = dfs(grid, r, c, visited)
+                    print(path)
+                    # max_path = max(path, max_path)
+
+        return max_path
+
 
 s = Solution()
+output = s.maxDistance([[1, 0, 1], [0, 0, 0], [1, 0, 1]])
+print(output)

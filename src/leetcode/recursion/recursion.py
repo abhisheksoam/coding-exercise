@@ -10,10 +10,6 @@ class TreeNode:
 
 
 class Solution:
-    """
-    https://leetcode.com/problems/longest-univalue-path/
-    """
-
     def tribonacci(self, n: int) -> int:
         if n >= 3:
             output = [-1] * (n + 1)
@@ -59,27 +55,6 @@ class Solution:
 
         return output
 
-    # def longestUnivaluePath(self, root: TreeNode) -> int:
-    #
-    #     def helper(node):
-    #         if not node:
-    #             return 0
-    #
-    #         value = 0
-    #         if node.left and node.right:
-    #             if node.left.val == node.val and node.right.val == node.val:
-    #                 return 2 + helper(node.left) + node(node.right)
-    #         elif node.left and not node.right:
-    #             if node.left.val == node.val:
-    #                 return 1 + helper(node.left) + node(node.right)
-    #         elif node.right and not node.left:
-    #             if node.right.val == node.val:
-    #                 return 1 + helper(node.left) + node(node.right)
-    #
-    #         return  helper(node.left) + node(node.right)
-    #
-    #     return helper(root)
-
     """
        https://leetcode.com/problems/expression-add-operators/
     """
@@ -121,7 +96,6 @@ class Solution:
 s = Solution()
 output = s.addOperators("00", 0)
 print(output)
-
 
 # s.fibonacci(15)
 # print(s.climbStairs(n=4))

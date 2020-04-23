@@ -1032,9 +1032,33 @@ class Solution:
 
         return helper(root)
 
+    """
+    https://leetcode.com/problems/longest-univalue-path/
+    """
+
+    # TODO:
+    def longestUnivaluePath(self, root: TreeNode) -> int:
+        output = []
+
+        def helper(node, process=""):
+            if not node:
+                return
+
+            if process:
+                process = process + "->{node_val}".format(node_val=node.val)
+            else:
+                process = "{node_val}".format(node_val=node.val)
+
+            if not node.left and not node.right:
+                output.append(process)
+
+            helper(node.left, process)
+            helper(node.right, process)
+
+        helper(root)
+        print(output)
+
 
 s = Solution()
-root = stringToTreeNode("[3,0,4, null, 2, null, null, 1]")
-output = s.trimBST(root, 1, 3)
-print(output.val)
-print(output.right.val)
+root = stringToTreeNode("[4,4,4]")
+s.longestUnivaluePath(root)

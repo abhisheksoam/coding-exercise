@@ -1,4 +1,5 @@
 import collections
+from typing import List
 
 
 class Node:
@@ -37,3 +38,29 @@ class Solution:
                     new_node.neighbors.append(neighbours_new_node)
 
         return root
+
+    """
+    https://leetcode.com/problems/find-the-town-judge/
+    :solution_seen True
+    :time_complexity O(n)
+    :space_complexity O(n)
+    :category easy
+    :example_case 
+    print(s.findJudge(2, [[1, 2]])) 
+    """
+
+    def findJudge(self, N: int, trust: List[List[int]]) -> int:
+        trusted = [0] * (N + 1)
+        for a, b in trust:
+            trusted[b] += 1
+            trusted[a] -= 1
+
+        check_value = N - 1
+        for i in range(1, N + 1):
+            if trusted[i] == check_value:
+                return i
+
+        return -1
+
+
+s = Solution()

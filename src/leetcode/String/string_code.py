@@ -322,6 +322,113 @@ class Solution:
 
         return False
 
+    """
+    Check Valid string
+    """
+
+    # TODO:
+    def checkValidString(self, s: str) -> bool:
+        if not s:
+            return True
+
+        def is_parenthesis_valid(top, current_char):
+            if top == "(" and current_char == ")":
+                return True
+            return False
+
+        def helper(stack, parenthesis_string):
+            if not parenthesis_string:
+                if stack:
+                    return False
+                return True
+
+            if not stack:
+                return True
+
+            current_char = parenthesis_string[0]
+            top = stack[-1]
+            if current_char == "*":
+                blank = helper(stack, parenthesis_string[1:])
+                if blank:
+                    return True
+
+                l_p_valid = is_parenthesis_valid(top, "(")
+                if l_p_valid:
+                    stack.pop(-1)
+                else:
+                    stack.append("(")
+
+                left_parenthesis = helper(stack, parenthesis_string[1:])
+                if l_p_valid:
+                    stack.append(top)
+                else:
+                    stack.pop(-1)
+
+                if left_parenthesis:
+                    return True
+
+                r_p_valid = is_parenthesis_valid(top, ")")
+                if r_p_valid:
+                    stack.pop(-1)
+                else:
+                    stack.append(")")
+
+                right_parenthesis = helper(stack, parenthesis_string[1:])
+
+                if r_p_valid:
+                    stack.append(top)
+                else:
+                    stack.pop(-1)
+
+                if right_parenthesis:
+                    return True
+
+            else:
+                if is_parenthesis_valid(top, current_char):
+                    stack.pop(-1)
+                else:
+                    stack.append(current_char)
+
+                return helper(stack, parenthesis_string[1:])
+
+        return helper([s[0]], parenthesis_string=s[1:])
+
+    """
+    https://leetcode.com/problems/rotate-string/
+    :solution_seen False
+    :time_complexity O(N^2)
+    :space_complexity O(1)
+    
+    Optimized Approach:
+    KNP Algorithm
+    Rolling Hash
+    """
+
+    def rotateString(self, A: str, B: str) -> bool:
+
+        if len(A) != len(B):
+            return False
+
+        if A == B:
+            return True
+
+        def rotate(input):
+            left = input[0]
+            right = input[1:]
+            return right + left
+
+        value = B
+        for i in range(0, len(B)):
+            value = rotate(value)
+            if value == A:
+                return True
+
+        return False
+
 
 s = Solution()
-print(s.minWindow("ab", "A"))
+
+output = s.rotateString("bbbacddceeb", "ceebbbbacdd")
+print(output)
+# output = s.checkValidString("((*)")
+# print(output)
