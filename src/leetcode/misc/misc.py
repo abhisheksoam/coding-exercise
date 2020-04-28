@@ -81,32 +81,6 @@ class Solution:
 
         return True
 
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
-        from collections import defaultdict
-
-        process = {}
-        output = defaultdict(dict)
-        index = 0
-        size = len(nums)
-        for value in nums:
-            process[value] = process.get(value, 0) + 1
-
-        for i in range(0, size):
-            for j in range(i + 1, size):
-                valA, valB = nums[i], nums[j]
-                valC = -(valA + valB)
-                if process.get(valC):
-                    if self.is_candidate_absent(output, [valA, valB, valC]):
-                        output[index] = {valA: True, valB: True, valC: True}
-                        index = index + 1
-        l = []
-        for key, value in output.items():
-            p = []
-            for key in value.keys():
-                p.append(key)
-            l.append(p)
-        return l
-
     # def myAtoi(self, str: str) -> int:
     #     size = len(str)
     #     str.lstrip()

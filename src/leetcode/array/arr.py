@@ -918,7 +918,8 @@ class Solution:
     :category hard
     
     Optimised solution
-     
+    Using heap to get max
+    Deque Solution
     """
 
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
@@ -934,19 +935,195 @@ class Solution:
 
         return output
 
-    # Version 2
-    def maxSlidingWindow_v2(self, nums: List[int], k: int) -> List[int]:
-        output = []
+    """
+    https://leetcode.com/problems/continuous-subarray-sum/
+    """
+
+    # TODO:
+    def checkSubarraySum(self, nums: List[int], k: int) -> bool:
+        def binary_search(input, target, l, r):
+            if l > r:
+                return -1
+            else:
+                m = l + (r - l) // 2
+
+                if input[m] == target:
+                    return m
+
+                elif target > input[m]:
+                    return binary_search(input, target, m + 1, r)
+                elif target < input[m]:
+                    return binary_search(input, target, l, m - 1)
+
+        cumulative_sum = []
         _size = len(nums)
-        output.append(max(nums[0:k]))
-        for i in range(k, _size):
-            output.append(max(nums[i], output[-1]))
+        sum = 0
+        for i in range(0, _size):
+            current_element = nums[i]
+            sum += current_element
+            cumulative_sum.append(sum)
+
+        for i in range(0, _size):
+            current_element = cumulative_sum[i]
+            if binary_search(cumulative_sum, current_element + k, 0, _size - 1) != -1:
+                return True
+
+        return False
+
+    """
+    https://leetcode.com/problems/find-n-unique-integers-sum-up-to-zero/
+    :time_complexity O(N)
+    :space_complexity O(1)
+    :category easy
+    :solution_seen False
+    
+    """
+
+    def sumZero(self, n: int) -> List[int]:
+        if n < 0 or n == 0:
+            return []
+        elif n == 1:
+            return [0]
+
+        output = []
+        value = n // 2
+        for i in range(-value, value + 1):
+            output.append(i)
+
+        if n % 2 == 0:
+            output.remove(0)
 
         return output
 
+    """
+    https://leetcode.com/problems/find-k-closest-elements/
+    :category medium
+    :time_complexity O(N)
+    :space_complexity O(N)
+    
+    Example:
+    s = Solution()
+    print(s.findClosestElements([1, 2, 3, 4, 5], 4, 3))
+
+    """
+
+    # TODO:
+    """
+    This approach fails with repetitive number
+    """
+
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        def binary_search(input, target, l, r):
+            if l > r:
+                return -1
+            else:
+                m = l + (r - l) // 2
+
+                if input[m] == target:
+                    return m
+
+                elif target > input[m]:
+                    return binary_search(input, target, m + 1, r)
+                elif target < input[m]:
+                    return binary_search(input, target, l, m - 1)
+
+        def return_array(index):
+            if index > k - 1:
+                return arr[index - k - 1 : index + 1]
+            elif index == k:
+                return arr[0:k]
+            else:
+                return arr[0:index] + arr[index:k]
+
+        _size = len(arr)
+        smallest_element = arr[0]
+        maximum_element = arr[-1]
+
+        if x < smallest_element:
+            return arr[0:k]
+        elif x > maximum_element:
+            return arr[_size - k :]
+        else:
+            # If Element present in array
+            index = binary_search(arr, x, 0, _size - 1)
+            if index == -1:
+                for i in range(0, _size):
+                    if arr[i] > x:
+                        index = i - 1
+                        break
+
+            return return_array(index)
+
+    def findClosestElements(self, arr: List[int], k: int, x: int) -> List[int]:
+        nums = []
+        _size = len(arr)
+        for i in range(0, _size):
+            nums.append(abs(arr[i] - x))
+
+        index = -1
+        min_number = float("inf")
+        for i in range(0, _size):
+            if nums[i] <= min_number:
+                min_number = nums[i]
+                index = i
+
+        add_elements = []
+        l, r = index, index + 1
+        while l >= 0 and r <= _size - 1 and len(add_elements) != k:
+            l_value = nums[l]
+            r_value = nums[r]
+
+            if l_value <= r_value:
+                add_elements = [arr[l]] + add_elements
+                l = l - 1
+            else:
+                add_elements.append(arr[r])
+                r = r + 1
+
+        while l >= 0 and len(add_elements) != k:
+            add_elements = [arr[l]] + add_elements
+            l = l - 1
+
+        while r <= _size - 1 and len(add_elements) != k:
+            add_elements.append(arr[r])
+            r = r + 1
+
+        return add_elements
+
+    """
+    https://leetcode.com/problems/consecutive-numbers-sum/
+    :category hard
+    :time_complexity O(N)
+    :space_complexity O(1)
+    
+    # Optimised Approach
+    On a mathematical induction O (Log(n)) 
+    """
+
+    def consecutiveNumbersSum(self, N: int) -> int:
+        numbers = 1
+
+        l, r = 1, 2
+
+        value_sum = l
+        while r <= int(N ** 0.5 + 2):
+            if value_sum > N:
+                value_sum = value_sum - l
+                l = l + 1
+            elif value_sum < N:
+                value_sum = value_sum + r
+                r = r + 1
+
+            if value_sum == N:
+                numbers += 1
+                value_sum = value_sum - l
+                l = l + 1
+
+        return numbers
+
 
 s = Solution()
-print(s.search([2, 1], 1))
+print(s.consecutiveNumbersSum(15))
 
 """
 https://leetcode.com/problems/shuffle-an-array/

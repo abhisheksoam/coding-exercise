@@ -92,6 +92,32 @@ class Solution:
 
         return slow
 
+    """
+    https://leetcode.com/problems/intersection-of-two-linked-lists/
+    :solution_seen False
+    :time_complexity O(N)
+    :space_complexity O(N)
+    
+    
+    """
+
+    def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> ListNode:
+        node = headA
+        map = {}
+        while node is not None:
+            map[id(node)] = node
+            node = node.next
+
+        node = headB
+        while node is not None:
+            node_id = id(node)
+            if map.get(node_id):
+                return map.get(node_id)
+
+            node = node.next
+
+        return None
+
 
 head = ListNode(1)
 head.next = ListNode(2)

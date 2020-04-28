@@ -189,43 +189,6 @@ class Solution:
             print(str(e))
             return 0
 
-    # TODO:
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
-        pass
-        # from collections import defaultdict
-        # process = {}
-        # for index, value in enumerate(nums):
-        #     process[value] = process.get(value, 0) + 1
-        #
-        # output = defaultdict(dict)
-        #
-        # size = len(nums)
-        # count = 0
-        # for i in range(0, size):
-        #     ith_value = nums[i]
-        #     process[ith_value] = process.get(ith_value) - 1
-        #
-        #     for j in range(i + 1, size):
-        #         jth_value = nums[j]
-        #         process[jth_value] = process.get(jth_value) - 1
-        #
-        #         sum = ith_value + jth_value
-        #         if process.get(-sum, 0) > 0:
-        #             output[count][ith_value] = True
-        #             output[count][jth_value] = True
-        #             output[count][-sum] = True
-        #             count = count + 1
-        #
-        #         process[jth_value] = process.get(jth_value) + 1
-        #
-        #     process[ith_value] = process.get(ith_value) + 1
-        #
-        # return output
-
-        # output = []
-        # left = 0
-        # right = len(nums) - 1
-
     def removeDuplicates(self, nums: List[int]) -> int:
         previous_value = None
         count = 0
@@ -463,24 +426,6 @@ class Solution:
 
         return output
 
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
-        output = []
-
-        left = 0
-        right = len(nums) - 1
-
-        while left <= right:
-            l_value = nums[left]
-            r_value = nums[right]
-            for i in range(left + 1, right):
-                if nums[i] + l_value + r_value == 0:
-                    output.append([l_value, nums[i], r_value])
-
-            left = left + 1
-            right = right - 1
-
-        return output
-
     # def binary_search(self, input, target, l, r):
     #     if l > r:
     #         return -1
@@ -594,33 +539,6 @@ class Solution:
     https://leetcode.com/problems/3sum/
     """
 
-    # def threeSum(self, nums: List[int]) -> List[List[int]]:
-    #     nums.sort()
-    #     size = len(nums)
-    #     output = []
-    #
-    #     for i in range(0, size - 2):
-    #         start = i + 1
-    #         end = size - 1
-    #
-    #         while start < end:
-    #             s = nums[i] + nums[start] + nums[end]
-    #             if s == 0:
-    #                 output.append([nums[i], nums[start], nums[end]])
-    #                 while start < end and nums[start] == nums[start + 1]:
-    #                     start += 1
-    #                 while end > start and nums[end] == nums[end - 1]:
-    #                     end -= 1
-    #
-    #                 start = start + 1
-    #                 end = end - 1
-    #             elif s > 0:
-    #                 end = end - 1
-    #             else:
-    #                 start = start + 1
-    #
-    #     return output
-
     def threeSum(self, nums):
         nums.sort()
         res, leng = [], len(nums)
@@ -645,27 +563,3 @@ class Solution:
 
     def countSmaller(self, nums: List[int]) -> List[int]:
         pass
-
-
-# nums = [7, 5, -8, -6, -13, 7, 10, 1, 1, -4, -14, 0, -1, -10, 1, -13, -4, 6, -11, 8, -6, 0, 0, -5, 0, 11, -9, 8, 2, -6,
-#         4, -14, 6, 4, -5, 0, -12, 12, -13, 5, -6, 10, -10, 0, 7, -2, -5, -12, 12, -9, 12, -9, 6, -11, 1, 14, 8, -1, 7,
-#         -13, 8, -11, -11, 0, 0, -1, -15, 3, -11, 9, -7, -10, 4, -2, 5, -4, 12, 7, -8, 9, 14, -11, 7, 5, -15, -15, -4, 0,
-#         0, -11, 3, -15, -15, 7, 0, 0, 13, -7, -12, 9, 9, -3, 14, -1, 2, 5, 2, -9, -3, 1, 7, -12, -3, -1, 1, -2, 0, 12,
-#         5, 7, 8, -7, 7, 8, 7, -15]
-
-# nums = [-1, 0, 1, 2, -1, -4]
-# s = Solution()
-# print(s.threeSum(nums))
-
-# print(s.myAtoi("-91283472332"))
-# nums = [-1, 0, 1, 2, -1, -4]
-# print(s.threeSum(nums))
-
-# print(s.findMedianSortedArrays(nums1, nums2))
-# print(s.reverse(-123))
-
-# nums = [0, 0, 1, 1, 1, 2, 2, 3, 3, 4]
-# print(s.removeDuplicates(nums))
-
-# nums = [3, 2, 2, 3]
-# print(s.removeElement(nums, 3))

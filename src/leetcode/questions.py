@@ -209,24 +209,6 @@ class Solution:
 
         return output
 
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
-        output = []
-
-        left = 0
-        right = len(nums) - 1
-
-        while left <= right:
-            l_value = nums[left]
-            r_value = nums[right]
-            for i in range(left + 1, right):
-                if nums[i] + l_value + r_value == 0:
-                    output.append([l_value, nums[i], r_value])
-
-            left = left + 1
-            right = right - 1
-
-        return output
-
     # def binary_search(self, input, target, l, r):
     #     if l > r:
     #         return -1
@@ -346,13 +328,3 @@ class Solution:
 s = Solution()
 nums = [1, 3, 5, 6]
 print(s.searchInsert(nums, 7))
-# print(s.searchRange(nums, 6))
-# print(s.longestPalindrome("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabcaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
-# print(s.findMedianSortedArrays(nums1, nums2))
-# print(s.isPalindrome(-121))
-# h = [1, 8, 6, 2, 5, 4, 8, 3, 7]
-# print(s.maxArea(h))
-# print(s.longestPalindrome("aaaaa"))
-# print(s.addTwoNumbers(node, n1))
-# nums = [-1, 0, 1, 2, -1, -4]
-# print(s.threeSum(nums))
