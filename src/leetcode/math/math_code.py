@@ -33,33 +33,20 @@ class Solution:
     """
     https://leetcode.com/problems/powx-n/
     """
-
+    # TODO:
     def myPow(self, x: float, n: int) -> float:
-        def divide_conq(input):
-            if not input:
-                return []
+        def tail_recursion(num, power, output=x):
+            if power == 1:
+                return output
 
-            size = len(input)
-            l = 0
+            if power % 2 == 0:
+                return tail_recursion(num, power / 2, output=output + num ** num)
+            else:
+                return tail_recursion(
+                    num, (power - 1) / 2, output=output + num * (num ** num)
+                )
 
-        if n == 0:
-            return 1
-
-        bottoms_up = n < 0
-        negative = x < 0 and n % 2 != 0
-
-        x = abs(x)
-        n = abs(n)
-
-        input = [x] * n
-
-        # if bottoms_up:
-        #     result = 1 / result
-        #
-        # if negative:
-        #     result = - result
-        #
-        # return result
+        return tail_recursion(x, n)
 
     """
     https://leetcode.com/problems/excel-sheet-column-number/
@@ -130,7 +117,23 @@ class Solution:
 
         return zero_count
 
+    """
+    Is perfect square     
+    """
+    def isPerfectSquare(self, num: int) -> bool:
+        square = 1
+        number = 1
+        while square <= num:
+            if square == num:
+                return True
+            square = square + 2 * number + 1
+            number = number + 1
+
+        return False
+
 
 s = Solution()
 # print(s.divide(-2147483648, -1))
-print(s.countPrimes(10))
+# print(s.countPrimes(10))
+
+print(s.myPow(2.0000, 10))

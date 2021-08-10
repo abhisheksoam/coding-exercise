@@ -402,6 +402,10 @@ class Solution:
     Optimized Approach:
     KNP Algorithm
     Rolling Hash
+    
+    Example
+    output = s.rotateString("bbbacddceeb", "ceebbbbacdd")
+    print(output)
     """
 
     def rotateString(self, A: str, B: str) -> bool:
@@ -425,10 +429,49 @@ class Solution:
 
         return False
 
+    """
+    https://leetcode.com/problems/longest-substring-without-repeating-characters/
+    """
+
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        i = 0
+        hashmap = {}
+        max_len = 0
+        p_len = 0
+        while i < len(s):
+            if hashmap.get(s[i]):
+                max_len = max(max_len, p_len)
+                i = int(hashmap.get(s[i])) + 1
+                p_len = 0
+                hashmap = {}
+            else:
+                p_len += 1
+                hashmap[s[i]] = str(i)
+                i = i + 1
+
+        max_len = max(max_len, p_len)
+        return max_len
+
+    """
+    https://leetcode.com/problems/longest-palindromic-substring/
+    """
+
+    # TODO:
+    def longestPalindrome(self, s: str) -> str:
+        l = 0
+        r = len(s) - 1
+        max_palindrome = ""
+        max_palindrome_len = 1
+
+        while l < r:
+
+            if s[l] == s[r]:
+                l = l + 1
+                r = r - 1
+                max_palindrome = max_palindrome +
+            else:
+
+
 
 s = Solution()
-
-output = s.rotateString("bbbacddceeb", "ceebbbbacdd")
-print(output)
-# output = s.checkValidString("((*)")
-# print(output)
+print(s.lengthOfLongestSubstring(" "))

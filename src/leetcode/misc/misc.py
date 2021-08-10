@@ -63,16 +63,6 @@ class Solution:
 
         return head
 
-    def swapPairs(self, head: ListNode) -> ListNode:
-        if not head:
-            return head
-
-        node1 = head
-        if node1.next is None:
-            return head
-        else:
-            node2 = head.next
-
     def is_candidate_absent(self, output, solution):
         for solution_no, candidate in output.items():
             valA, valB, valC = solution[0], solution[1], solution[2]
@@ -210,6 +200,13 @@ class Solution:
     def reverseBits(self, n: int) -> int:
         pass
 
+    """
+    https://leetcode.com/problems/complement-of-base-10-integer/
+    """
+
+    def findComplement(self, num: int) -> int:
+        return num >> 1
+
 
 """
 https://leetcode.com/problems/find-median-from-data-stream/
@@ -274,13 +271,35 @@ https://leetcode.com/problems/lru-cache/
 class LRUCache:
     def __init__(self, capacity: int):
         self.capacity = capacity
+        self.lru = []
+        self.hashmap = {}
+        self.operations = 0
 
     def get(self, key: int) -> int:
-        pass
+        index = self.hashmap.get(key)
+        if self.operations - (index + 1) < self.capacity:
+            value = self.lru[index][1]
+            self.put(key, value)
+            return value
+        else:
+            return -1
 
     def put(self, key: int, value: int) -> None:
-        pass
+        self.lru.append((key, value))
+        self.hashmap[key] = self.operations
+        self.operations += 1
 
+
+cache = LRUCache(2)
+cache.put(1, 1)
+cache.put(2, 2)
+print(cache.get(1))
+cache.put(3, 3)
+print(cache.get(2))
+cache.put(4, 4)
+print((cache.get(1)))
+cache.get(3)
+cache.get(4)
 
 """
 https://leetcode.com/problems/add-and-search-word-data-structure-design/

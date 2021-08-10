@@ -85,6 +85,9 @@ class Solution:
 
     """
     https://leetcode.com/problems/as-far-from-land-as-possible/
+    output = s.maxDistance([[1, 0, 1], [0, 0, 0], [1, 0, 1]])
+    print(output)
+
     """
 
     # TODO:
@@ -123,7 +126,91 @@ class Solution:
 
         return max_path
 
+    """
+    https://leetcode.com/problems/set-matrix-zeroes/
+    :category medium
+    :time_complexity O(M * N)
+    :space_complexity O(M + N)
+    :solution_seen False
+    
+    Example:
+    # For Set zero
+    matrix = [[0, 1, 2, 0], [3, 4, 5, 2], [1, 3, 1, 5]]
+    s.setZeroes(matrix)
+    print(matrix)    
+    """
+
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        rows = len(matrix)
+        columns = len(matrix[0])
+
+        def mark_row(row):
+            for i in range(0, columns):
+                if matrix[row][i] == 0:
+                    continue
+
+                matrix[row][i] = None
+
+        def mark_col(col):
+            for i in range(0, rows):
+                if matrix[i][col] == 0:
+                    continue
+
+                matrix[i][col] = None
+
+        row_marked = set()
+        col_marked = set()
+
+        for i in range(0, rows):
+            for j in range(0, columns):
+                if matrix[i][j] == 0:
+                    if i not in row_marked:
+                        mark_row(i)
+                        row_marked.add(i)
+                    if j not in col_marked:
+                        mark_col(j)
+                        col_marked.add(j)
+
+        for i in range(0, rows):
+            for j in range(0, columns):
+                if matrix[i][j] is None:
+                    matrix[i][j] = 0
+
+    """
+    Flood Fill
+    """
+
+    def floodFill(self, image: List[List[int]], sr: int, sc: int, newColor: int) -> List[List[int]]:
+        rows = len(image)
+        columns = len(image[0])
+        old_colr = image[sr][sc]
+        if old_colr == newColor:
+            return image
+
+        visited = [[0 for col in range(columns)] for rr in range(rows)]
+
+        def dfs(i, j):
+            if i < 0 or i >= rows or j < 0 or j >= columns or visited[i][j] == 1:
+                return
+
+            if image[i][j] == old_colr:
+                image[i][j] = newColor
+                visited[i][j] = 1
+                dfs(i + 1, j)
+                dfs(i - 1, j)
+                dfs(i, j + 1)
+                dfs(i, j - 1)
+                visited[i][j] = 0
+
+            return
+
+        dfs(sr, sc)
+
+        return image
+
 
 s = Solution()
-output = s.maxDistance([[1, 0, 1], [0, 0, 0], [1, 0, 1]])
-print(output)
+matrix = [[0, 0, 0], [0, 1, 1]]
+
+s.floodFill(matrix, 1, 1, 1)
+print(matrix)

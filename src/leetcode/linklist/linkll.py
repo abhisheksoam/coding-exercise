@@ -55,18 +55,25 @@ class Solution:
     https://leetcode.com/problems/reverse-linked-list/
     """
 
-    # TODO:
     def reverseList(self, head: ListNode) -> ListNode:
         def helper(node):
-            if not node:
-                return None
+            if node.next is None:
+                return node
 
-            current = node
-            next_node = helper(node.next)
-            next_node.next = current
-            return next_node
+            node.next = helper(node.next)
+            return head
 
         return helper(head)
+
+    """
+    Print linklist
+    """
+
+    def print(self, root):
+        while root is not None:
+            print(root.val, end="->")
+            root = root.next
+        print("\n")
 
     """
     https://leetcode.com/problems/delete-node-in-a-linked-list/
@@ -118,14 +125,49 @@ class Solution:
 
         return None
 
+    """
+    https://leetcode.com/problems/swap-nodes-in-pairs/        
+    :category medium
+    :space_complexity O(1)
+    :time_complexity O(n)
+    
+    Example
+    s = Solution()
+    s.print(head)
+    print("\n")
+    output = s.swapPairs(head)
+    s.print(output)
+    """
+
+    def swapPairs(self, head: ListNode) -> ListNode:
+        def helper(head):
+            if not head:
+                return None
+
+            first = head
+            second = head.next
+            if second is None:
+                return first
+
+            first.next = second.next
+            second.next = first
+
+            first.next = helper(first.next)
+
+            return second
+
+        return helper(head)
+
 
 head = ListNode(1)
 head.next = ListNode(2)
 head.next.next = ListNode(3)
 head.next.next.next = ListNode(4)
 head.next.next.next.next = ListNode(5)
-head.next.next.next.next.next = ListNode(6)
+# head.next.next.next.next.next = ListNode(6)
 
-s = Solution()
-output = s.middleNode(head)
-print(output.val)
+
+# s = Solution()
+# s.print(head)
+# head = s.reverseList(head)
+# s.print(head)

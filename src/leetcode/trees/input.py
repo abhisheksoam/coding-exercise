@@ -422,7 +422,7 @@ class Solution:
                 try:
                     print(res[index])
                     res[index][0] = (res[index][0] * res[index][1] + current.val) / (
-                        res[index][1] + 1
+                            res[index][1] + 1
                     )
                     res[index][1] = res[index][1] + 1
                 except:
@@ -805,7 +805,7 @@ class Solution:
         mid = len(nums) // 2
         node = TreeNode(nums[mid])
         node.left = self.sortedArrayToBST(nums[:mid])
-        node.right = self.sortedArrayToBST(nums[mid + 1 :])
+        node.right = self.sortedArrayToBST(nums[mid + 1:])
         return node
 
     """
@@ -952,7 +952,7 @@ class Solution:
                     max_element = element
 
             left = nums[0:max_index]
-            right = nums[max_index + 1 :]
+            right = nums[max_index + 1:]
             return max_element, left, right
 
         def helper(nums, root=None):
@@ -1058,7 +1058,97 @@ class Solution:
         helper(root)
         print(output)
 
+    """
+    https://leetcode.com/problems/search-in-a-binary-search-tree/
+    """
+
+    def searchBST(self, root: TreeNode, val: int) -> TreeNode:
+        def helper(node, val):
+            if not node:
+                return None
+
+            if node.val == val:
+                return True
+
+            else:
+                return helper(node.left, val) or helper(node.right, val)
+
+        return helper(root, val)
+
+    """
+    Cousins in a binary tree
+    :category easy
+    :time_complexity O(N)
+    :space_complexity O(1)
+    """
+
+    def isCousins(self, root: TreeNode, x: int, y: int) -> bool:
+        def helper(root, x, depth=0):
+            if not root:
+                return (0, None)
+            else:
+                parent = root
+                left = parent.left
+                right = parent.right
+                if left and left.val == x:
+                    return (depth, parent)
+
+                elif right and right.val == x:
+                    return (depth, parent)
+
+                else:
+                    l = helper(left, x, depth=depth + 1)
+                    r = helper(right, x, depth=depth + 1)
+                    if l[1] is not None:
+                        return l
+                    else:
+                        return r
+
+        output_x = helper(root, x)
+        output_y = helper(root, y)
+        if output_x[0] != output_y[0]:
+            return False
+
+        if output_x[1] is None or output_y[1] is None:
+            return False
+
+        if output_x[1].val == output_y[1].val:
+            return False
+
+        return True
+
+    """
+    https://leetcode.com/problems/second-minimum-node-in-a-binary-tree/
+    :category easy
+    :time_complexity O(N)
+    :space_complexity O(1)    
+    """
+
+    def findSecondMinimumValue(self, root: TreeNode) -> int:
+
+        second_min_value = {
+            "value": float("inf")
+        }
+        min_value = root.val
+
+        def helper(node):
+            if not node:
+                return
+
+            if node.val > min_value and node.val < second_min_value["value"]:
+                    second_min_value["value"] = node.val
+
+            helper(node.left)
+            helper(node.right)
+
+        helper(root)
+        if second_min_value["value"] == float("inf"):
+            return -1
+        else:
+            return second_min_value["value"]
+
 
 s = Solution()
-root = stringToTreeNode("[4,4,4]")
-s.longestUnivaluePath(root)
+root = stringToTreeNode("[2,2,5,null,null,5,7]")
+print(s.findSecondMinimumValue(root))
+# s.longestUnivaluePath(root)
